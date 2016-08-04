@@ -16,5 +16,17 @@ namespace MMLibrary
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "open";
+           // if (openFileDialog1.ShowDialog() == DialogResult.OK)
+           //     string path = openFileDialog1.FileName;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
