@@ -47,7 +47,7 @@ namespace WindowsFormsApplication1
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             string sent = "Title should be here";//chatBox.Text;
-
+            SeachBox.AppendText(sent);
             //displayBox.AppendText(sent);
             //displayBox.AppendText(Environment.NewLine);
         }
@@ -61,8 +61,8 @@ namespace WindowsFormsApplication1
                 string file = openFileDialog1.FileName;
                 try
                 {
-                    string text = File.ReadAllText(file);
-                    size = text.Length;
+                    string NewFile = File.ReadAllText(file);
+                    size = NewFile.Length;
                 }
                 catch (IOException)
                 {
@@ -70,9 +70,31 @@ namespace WindowsFormsApplication1
             }
             string Str1 = String.Format("Size = {0}; Result = {1}", size, result);
             MessageBox.Show(Str1, "Debug info");
-            Console.WriteLine(size); // <-- Shows file size in debugging mode.
-            Console.WriteLine(result); // <-- For debugging use.
+            //Console.WriteLine(size); // <-- Shows file size in debugging mode.
+            //Console.WriteLine(result); // <-- For debugging use.
 
         }
+       
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            //for (int i = 0; i < dataGridView1.RowCount; i++)
+            //    if (dataGridView1[1, i].FormattedValue.ToString().
+            //        Contains(SeachBox.Text.Trim()))
+            //    {
+            //        dataGridView1.CurrentCell = dataGridView1[0, i];
+            //        return;
+            //    }
+
+            string selectString = "Title Like '%" + SeachBox.Text.Trim() + "%'";
+
+            DataRowCollection allRows =((DataTable)dataGridView1.DataSource).Rows;
+
+            DataRow[] searchedRows = ((DataTable)dataGridView1.DataSource).Select(selectString);
+
+            int rowIndex = allRows.IndexOf(searchedRows[0]);
+
+            dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
+        }
+
     }
 }

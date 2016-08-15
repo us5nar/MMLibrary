@@ -45,8 +45,9 @@
             this.dataColumn5 = new System.Data.DataColumn();
             this.SaveButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.SeachBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.SearchButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -64,7 +65,7 @@
             this.genreDataGridViewTextBoxColumn,
             this.yearDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.bindingSource1;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 29);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(544, 150);
             this.dataGridView1.TabIndex = 0;
@@ -145,7 +146,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(280, 168);
+            this.SaveButton.Location = new System.Drawing.Point(480, 185);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 1;
@@ -155,7 +156,7 @@
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(12, 168);
+            this.AddButton.Location = new System.Drawing.Point(12, 185);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(75, 23);
             this.AddButton.TabIndex = 2;
@@ -163,24 +164,37 @@
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
             // 
-            // textBox1
+            // SeachBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(562, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(210, 20);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.SeachBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SeachBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SeachBox.Location = new System.Drawing.Point(12, 3);
+            this.SeachBox.Name = "SeachBox";
+            this.SeachBox.Size = new System.Drawing.Size(463, 20);
+            this.SeachBox.TabIndex = 3;
+            this.SeachBox.Enter += new System.EventHandler(this.SearchButton_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // SearchButton
+            // 
+            this.SearchButton.Location = new System.Drawing.Point(481, 0);
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(75, 23);
+            this.SearchButton.TabIndex = 4;
+            this.SearchButton.Text = "Search";
+            this.SearchButton.UseVisualStyleBackColor = true;
+            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(778, 349);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(567, 217);
+            this.Controls.Add(this.SearchButton);
+            this.Controls.Add(this.SeachBox);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.dataGridView1);
@@ -217,8 +231,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn albomDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn genreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox SeachBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button SearchButton;
     }
 }
 
