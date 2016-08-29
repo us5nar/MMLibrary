@@ -54,22 +54,47 @@ namespace WindowsFormsApplication1
 
         private void AddButton_Click(object sender, EventArgs e)
         {
+            //How to add a DataRow to the DataSet:
+            //==========================================================
+            //DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+            //newMediaRow["fileName"] = "ALFKI";
+            //newMediaRow["Title"] = "Alfreds Futterkiste";
+            //dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+            //==========================================================
+
             int size = -1;
+            string[] files, paths;
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
-                string file = openFileDialog1.FileName;
-                try
-                {
-                    string NewFile = File.ReadAllText(file);
-                    size = NewFile.Length;
+                files = openFileDialog1.SafeFileNames;
+                paths = openFileDialog1.FileNames;
+
+               // foreach (string value in files)
+                  for (int i = 0; i < files.Length; i++)
+                    {
+                    try
+                    {
+                        size = files[i].Length;
+                        string Str1 = String.Format("FileName = {0} Size = {1}; Result = {2}", files[i], size, result);
+                        MessageBox.Show(Str1, "Debug info");
+
+                        DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+                        newMediaRow["fileName"] = files[i];
+                        newMediaRow["Title"] = string.Format("Test {0}",i);
+                        newMediaRow["Year"] = string.Format("{0}",size);
+                        dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("WTF?", "Debug info");
+                    }
+
                 }
-                catch (IOException)
-                {
-                }
+                //string file = openFileDialog1.FileName;
+              
             }
-            string Str1 = String.Format("Size = {0}; Result = {1}", size, result);
-            MessageBox.Show(Str1, "Debug info");
+            
             //Console.WriteLine(size); // <-- Shows file size in debugging mode.
             //Console.WriteLine(result); // <-- For debugging use.
 
@@ -96,5 +121,9 @@ namespace WindowsFormsApplication1
             dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //CONTINUE HERE!!!
+        }
     }
 }
