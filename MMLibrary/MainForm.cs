@@ -71,16 +71,16 @@ namespace WindowsFormsApplication1
                 paths = openFileDialog1.FileNames;
 
                // foreach (string value in files)
-                  for (int i = 0; i < files.Length; i++)
+                  for (int i = 0; i < paths.Length; i++)
                     {
                     try
                     {
-                        size = files[i].Length;
-                        string Str1 = String.Format("FileName = {0} Size = {1}; Result = {2}", files[i], size, result);
-                        MessageBox.Show(Str1, "Debug info");
-
+                        size = paths[i].Length;
+                        //string Str1 = String.Format("FileName = {0} Size = {1}; Result = {2}", files[i], size, result);
+                        //MessageBox.Show(Str1, "Debug info");
+                        //here should be processor for ID3 tags
                         DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
-                        newMediaRow["fileName"] = files[i];
+                        newMediaRow["fileName"] = paths[i];
                         newMediaRow["Title"] = string.Format("Test {0}",i);
                         newMediaRow["Year"] = string.Format("{0}",size);
                         dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
@@ -102,6 +102,7 @@ namespace WindowsFormsApplication1
        
         private void SearchButton_Click(object sender, EventArgs e)
         {
+            //The example how to search
             //for (int i = 0; i < dataGridView1.RowCount; i++)
             //    if (dataGridView1[1, i].FormattedValue.ToString().
             //        Contains(SeachBox.Text.Trim()))
@@ -124,6 +125,15 @@ namespace WindowsFormsApplication1
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             //CONTINUE HERE!!!
+            //      private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+            //{
+            //    axWindowsMediaPlayer1.URL = paths[listBox1.SelectedIndex];
+            //}
+            //string[] fileNameFromDataset = dataGridView1.f
+            string firstCellValue = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+            string secondCellValue = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+            MessageBox.Show(firstCellValue, "Debug info");
+            axWindowsMediaPlayer1.URL = firstCellValue;
         }
     }
 }
