@@ -31,6 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.singerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.albomDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.genreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet1 = new System.Data.DataSet();
             this.dataTable1 = new System.Data.DataTable();
@@ -39,19 +45,13 @@
             this.dataColumn3 = new System.Data.DataColumn();
             this.dataColumn4 = new System.Data.DataColumn();
             this.dataColumn5 = new System.Data.DataColumn();
+            this.dataColumn6 = new System.Data.DataColumn();
             this.SaveButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.SeachBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SearchButton = new System.Windows.Forms.Button();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            this.dataColumn6 = new System.Data.DataColumn();
-            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.singerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.albomDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.genreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.playButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -77,6 +77,43 @@
             this.dataGridView1.Size = new System.Drawing.Size(620, 150);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // FileName
+            // 
+            this.FileName.DataPropertyName = "FileName";
+            this.FileName.HeaderText = "FileName";
+            this.FileName.Name = "FileName";
+            this.FileName.ReadOnly = true;
+            // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
+            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            // 
+            // singerDataGridViewTextBoxColumn
+            // 
+            this.singerDataGridViewTextBoxColumn.DataPropertyName = "Singer";
+            this.singerDataGridViewTextBoxColumn.HeaderText = "Singer";
+            this.singerDataGridViewTextBoxColumn.Name = "singerDataGridViewTextBoxColumn";
+            // 
+            // albomDataGridViewTextBoxColumn
+            // 
+            this.albomDataGridViewTextBoxColumn.DataPropertyName = "Albom";
+            this.albomDataGridViewTextBoxColumn.HeaderText = "Albom";
+            this.albomDataGridViewTextBoxColumn.Name = "albomDataGridViewTextBoxColumn";
+            // 
+            // genreDataGridViewTextBoxColumn
+            // 
+            this.genreDataGridViewTextBoxColumn.DataPropertyName = "Genre";
+            this.genreDataGridViewTextBoxColumn.HeaderText = "Genre";
+            this.genreDataGridViewTextBoxColumn.Name = "genreDataGridViewTextBoxColumn";
+            // 
+            // yearDataGridViewTextBoxColumn
+            // 
+            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
+            this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
+            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
             // 
             // bindingSource1
             // 
@@ -123,6 +160,10 @@
             this.dataColumn5.Caption = "Year";
             this.dataColumn5.ColumnName = "Year";
             // 
+            // dataColumn6
+            // 
+            this.dataColumn6.ColumnName = "FileName";
+            // 
             // SaveButton
             // 
             this.SaveButton.Location = new System.Drawing.Point(93, 185);
@@ -146,11 +187,14 @@
             // SeachBox
             // 
             this.SeachBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SeachBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SeachBox.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             this.SeachBox.Location = new System.Drawing.Point(12, 3);
             this.SeachBox.Name = "SeachBox";
             this.SeachBox.Size = new System.Drawing.Size(539, 20);
             this.SeachBox.TabIndex = 3;
+            this.SeachBox.Text = "Dummy text";
+            this.SeachBox.UseWaitCursor = true;
+            this.SeachBox.TextChanged += new System.EventHandler(this.SeachBox_TextChanged);
             this.SeachBox.Enter += new System.EventHandler(this.SearchButton_Click);
             // 
             // openFileDialog1
@@ -177,47 +221,6 @@
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(620, 130);
             this.axWindowsMediaPlayer1.TabIndex = 5;
-            // 
-            // dataColumn6
-            // 
-            this.dataColumn6.ColumnName = "FileName";
-            // 
-            // FileName
-            // 
-            this.FileName.DataPropertyName = "FileName";
-            this.FileName.HeaderText = "FileName";
-            this.FileName.Name = "FileName";
-            this.FileName.ReadOnly = true;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            // 
-            // singerDataGridViewTextBoxColumn
-            // 
-            this.singerDataGridViewTextBoxColumn.DataPropertyName = "Singer";
-            this.singerDataGridViewTextBoxColumn.HeaderText = "Singer";
-            this.singerDataGridViewTextBoxColumn.Name = "singerDataGridViewTextBoxColumn";
-            // 
-            // albomDataGridViewTextBoxColumn
-            // 
-            this.albomDataGridViewTextBoxColumn.DataPropertyName = "Albom";
-            this.albomDataGridViewTextBoxColumn.HeaderText = "Albom";
-            this.albomDataGridViewTextBoxColumn.Name = "albomDataGridViewTextBoxColumn";
-            // 
-            // genreDataGridViewTextBoxColumn
-            // 
-            this.genreDataGridViewTextBoxColumn.DataPropertyName = "Genre";
-            this.genreDataGridViewTextBoxColumn.HeaderText = "Genre";
-            this.genreDataGridViewTextBoxColumn.Name = "genreDataGridViewTextBoxColumn";
-            // 
-            // yearDataGridViewTextBoxColumn
-            // 
-            this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
-            this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
-            this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
             // 
             // playButton
             // 

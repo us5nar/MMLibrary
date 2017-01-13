@@ -18,6 +18,7 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
@@ -32,7 +33,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dataSet1.ReadXml(m_XmlFileName);
+           // dataSet1.ReadXml(m_XmlFileName);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -110,16 +111,19 @@ namespace WindowsFormsApplication1
             //        dataGridView1.CurrentCell = dataGridView1[0, i];
             //        return;
             //    }
-
+            DataRowCollection allRows;
             string selectString = "Title Like '%" + SeachBox.Text.Trim() + "%'";
+         
+            if (dataGridView1.Rows.Count != 0 && dataGridView1.Rows != null)
+                {
+                allRows = ((DataTable)dataGridView1.DataSource).Rows;
 
-            DataRowCollection allRows =((DataTable)dataGridView1.DataSource).Rows;
+                DataRow[] searchedRows = ((DataTable)dataGridView1.DataSource).Select(selectString);
 
-            DataRow[] searchedRows = ((DataTable)dataGridView1.DataSource).Select(selectString);
+                int rowIndex = allRows.IndexOf(searchedRows[0]);
 
-            int rowIndex = allRows.IndexOf(searchedRows[0]);
-
-            dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
+                dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -134,6 +138,11 @@ namespace WindowsFormsApplication1
             string secondCellValue = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
             MessageBox.Show(firstCellValue, "Debug info");
             axWindowsMediaPlayer1.URL = firstCellValue;
+        }
+
+        private void SeachBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
