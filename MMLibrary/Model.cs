@@ -8,6 +8,11 @@ namespace MMLibrary
 {
     public class Model : IModel
     {
+        public void CheckfoDuplicates()
+        {
+            throw new NotImplementedException();
+        }
+
         public void PlayAudio()
         {
             throw new NotImplementedException();
@@ -28,18 +33,14 @@ namespace MMLibrary
             throw new NotImplementedException();
         }
 
-        bool IModel.AudioFileIsValid()
+        public bool AudioFileIsValid()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
-        bool AudioFileIsValid()   { return false; }
-
-        bool IModel.TagIsValid()
+        public bool TagIsValid()
         {
-            throw new NotImplementedException();
+            return false;
         }
-
-        bool TagIsValid() { return false; }
     }
 }
