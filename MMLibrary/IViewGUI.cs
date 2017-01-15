@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace MMLibrary
 {
-   // public delegate void NewUserEventHandler(INewUserView sender);
+   public delegate void AddButtonEventHandler(IViewGUI sender);
 
     public interface IViewGUI
     {
+        string[] FilePath { set; get; }
+        int FileSize { set; get; }
+        string Title { set; get; }
+        string Singer { set; get; }
+        int Duration { set; get; }
+
         string SeachBoxText { set; get; }
         string CellValue { set; get; }
         void DataGriIsEmpty();
 
-        //event NewUserEventHandler CreateNewUser;
+        event AddButtonEventHandler AddButtonPushed;
     }
 }

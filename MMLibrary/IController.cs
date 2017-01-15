@@ -11,7 +11,7 @@ namespace MMLibrary
         //===================================== API for GUI 
         // View (GUI) -> Controller
         void SearchButton(IViewGUI userView);
-        void AddButton(IViewGUI userView);
+        void AddButtonPrepare(IViewGUI userView);
         void SaveButton(IViewGUI userView);
         void PlayButton(IViewGUI userView);
         void SelectRaw(IViewGUI userView);

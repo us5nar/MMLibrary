@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using UltraID3Lib;
 
 namespace MMLibrary
 {
@@ -40,6 +41,7 @@ namespace MMLibrary
 
         public bool TagIsValid()
         {
+            
             return false;
         }
     }

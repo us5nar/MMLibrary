@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using System.IO;
+using MMLibrary;
 //using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Drawing;
@@ -11,15 +12,106 @@ using System.IO;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form , IViewGUI
     {
         private const string m_XmlFileName = @"Library.xml";
-        //private openFileDialog openFileDialog1();
+        
         public Form1()
         {
             InitializeComponent();
-
+            Controller Contr = new Controller(this);
+            Contr.AddButtonPrepare(this);
         }
+
+        public string SeachBoxText
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string CellValue
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int FileSize
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Singer
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public int Duration
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string[] FilePath
+        {
+            get
+            {
+                return openFileDialog1.FileNames;
+            }
+            set { }
+        }
+
+
+        //private openFileDialog openFileDialog1();
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
@@ -52,6 +144,15 @@ namespace WindowsFormsApplication1
             //displayBox.AppendText(sent);
             //displayBox.AppendText(Environment.NewLine);
         }
+        public event AddButtonEventHandler AddButtonPushed;
+        private void OnAddButtonPushed()
+        {
+            if (AddButtonPushed != null)
+            {
+                AddButtonPushed(this);
+                //AddIsPushed = true;
+            }
+        }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
@@ -70,9 +171,10 @@ namespace WindowsFormsApplication1
             {
                 files = openFileDialog1.SafeFileNames;
                 paths = openFileDialog1.FileNames;
-
-               // foreach (string value in files)
-                  for (int i = 0; i < paths.Length; i++)
+                OnAddButtonPushed(); // when "Add" was pressed, this triggers event for Controller , and sends reference to "this" Form1 object to the Controller class 
+                                    //  where Controller class is able to extract info from Form1 via public properties, such as FilePath 
+                // foreach (string value in files)
+                for (int i = 0; i < paths.Length; i++)
                     {
                     try
                     {
@@ -95,12 +197,19 @@ namespace WindowsFormsApplication1
                 //string file = openFileDialog1.FileName;
               
             }
-            
             //Console.WriteLine(size); // <-- Shows file size in debugging mode.
             //Console.WriteLine(result); // <-- For debugging use.
-
         }
-       
+
+        private void Form1_AddButtonPushed(IViewGUI sender)
+        {
+         //   Contr. = true;
+        }
+
+        private void UserView_AddButtonPushed(IViewGUI sender)
+        {
+            MessageBox.Show("The Add button was pushed , event fired in Controller");
+        }
         private void SearchButton_Click(object sender, EventArgs e)
         {
             //The example how to search
@@ -143,6 +252,52 @@ namespace WindowsFormsApplication1
         private void SeachBox_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void DataGriIsEmpty()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void PlayButton(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SelectRaw(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayNext(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayPrevious(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CleanSearch(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangesInGrid(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NewInfoForController(IViewGUI userView)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequstNewData(IViewGUI userView)
+        {
+            throw new NotImplementedException();
         }
     }
 }

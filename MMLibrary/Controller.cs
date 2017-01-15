@@ -3,25 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MMLibrary
 {
     public class Controller : IController
     {
-        public string FileName;
-        public int FileSize;
-        public string Title;
-        public string Singer;
-        public int Duration;
+        private bool AddIsPushed;
+        private string[] FilePathForController;
 
+        public Controller(Form userView)
+        {  }
         public void SearchButton(IViewGUI userView)
         {
             throw new NotImplementedException();
         }
 
-        public void AddButton(IViewGUI userView)
+        public void AddButtonPrepare(IViewGUI userView)
         {
-            throw new NotImplementedException();
+            userView.AddButtonPushed += UserView_AddButtonPushed;
+        }
+
+        private void UserView_AddButtonPushed(IViewGUI sender) 
+        {
+            AddIsPushed = true;
+            FilePathForController = sender.FilePath; // receive FilePaths from Form1 via public Property file path which is defined in View Interface. 
         }
 
         public void SaveButton(IViewGUI userView)
