@@ -62,6 +62,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -99,8 +100,8 @@
             // 
             // albomDataGridViewTextBoxColumn
             // 
-            this.albomDataGridViewTextBoxColumn.DataPropertyName = "Albom";
-            this.albomDataGridViewTextBoxColumn.HeaderText = "Albom";
+            this.albomDataGridViewTextBoxColumn.DataPropertyName = "Album";
+            this.albomDataGridViewTextBoxColumn.HeaderText = "Album";
             this.albomDataGridViewTextBoxColumn.Name = "albomDataGridViewTextBoxColumn";
             // 
             // genreDataGridViewTextBoxColumn
@@ -149,7 +150,7 @@
             // 
             // dataColumn3
             // 
-            this.dataColumn3.ColumnName = "Albom";
+            this.dataColumn3.ColumnName = "Album";
             // 
             // dataColumn4
             // 
@@ -173,7 +174,6 @@
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.button1_Click);
-            
             // 
             // AddButton
             // 
@@ -184,7 +184,6 @@
             this.AddButton.Text = "Add";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
-
             // 
             // SeachBox
             // 
@@ -279,12 +278,13 @@
         private System.Windows.Forms.Button SearchButton;
         private System.Data.DataColumn dataColumn6;
         private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
+
         private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn singerDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn albomDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn genreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
         private System.Windows.Forms.Button playButton;
     }
 }

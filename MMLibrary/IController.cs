@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MMLibrary
 {
-    interface IController
+    public interface IController
     {
+
         //===================================== API for GUI 
         // View (GUI) -> Controller
         void SearchButton(IViewGUI userView);
@@ -26,7 +28,7 @@ namespace MMLibrary
         void NewInfoForController(IViewGUI userView);
         //  Controller -> Model
         void RequstNewData(IViewGUI userView);
-
+        
         // Check for duplicates
     }
 }

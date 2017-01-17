@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using MMLibrary;
+using HundredMilesSoftware.UltraID3Lib;
 //using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Drawing;
@@ -15,12 +16,15 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form , IViewGUI
     {
         private const string m_XmlFileName = @"Library.xml";
-        
+        DataRow newMediaRow;
+        private string[][] TableForm;// = new string[openFileDialog1.FileNames.Length][6];
         public Form1()
         {
             InitializeComponent();
             Controller Contr = new Controller(this);
+            //Model ModelInst = new Model(this);
             Contr.AddButtonPrepare(this);
+            newMediaRow = dataSet1.Tables["MLlist"].NewRow();
         }
 
         public string SeachBoxText
@@ -66,12 +70,12 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                throw new NotImplementedException();
+                return string.Format("{0}", newMediaRow["Title"]);
             }
 
             set
             {
-                throw new NotImplementedException();
+                newMediaRow["Title"] = value;
             }
         }
 
@@ -79,12 +83,12 @@ namespace WindowsFormsApplication1
         {
             get
             {
-                throw new NotImplementedException();
+                return string.Format("{0}", newMediaRow["Artist"]);
             }
 
             set
             {
-                throw new NotImplementedException();
+                newMediaRow["Artist"] = value;
             }
         }
 
@@ -108,6 +112,84 @@ namespace WindowsFormsApplication1
                 return openFileDialog1.FileNames;
             }
             set { }
+        }
+
+        public string FileNames
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public string Year
+        {
+            get
+            {
+                return string.Format("{0}", newMediaRow["Year"]);
+            }
+
+            set
+            {
+                newMediaRow["Year"] = value;
+            }
+        }
+
+        public string Artist
+        {
+            get
+            {
+                return string.Format("{0}", newMediaRow["Singer"]);
+            }
+
+            set
+            {
+                newMediaRow["Singer"] = string.Format("{0}", value);
+            }
+        }
+
+        public string Album
+        {
+            get
+            {
+                return string.Format("{0}", newMediaRow["Album"]);
+            }
+
+            set
+            {
+                newMediaRow["Album"] = value;
+            }
+        }
+
+        public string Genre
+        {
+            get
+            {
+                return string.Format("{0}", newMediaRow["Genre"]);
+            }
+
+            set
+            {
+                newMediaRow["Genre"] = value;
+            }
+        }
+
+        public string[][] TableContr
+        {
+            get
+            {
+                return TableForm;
+            }
+
+            set
+            {
+                TableForm = value;
+            }
         }
 
 
@@ -169,28 +251,38 @@ namespace WindowsFormsApplication1
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
-                files = openFileDialog1.SafeFileNames;
+                //files = openFileDialog1.SafeFileNames;
                 paths = openFileDialog1.FileNames;
+                TableForm = new string[paths.Length][];
                 OnAddButtonPushed(); // when "Add" was pressed, this triggers event for Controller , and sends reference to "this" Form1 object to the Controller class 
-                                    //  where Controller class is able to extract info from Form1 via public properties, such as FilePath 
-                // foreach (string value in files)
+                                     //  where Controller class is able to extract info from Form1 via public properties, such as FilePath 
+                                     // foreach (string value in files)
+               
                 for (int i = 0; i < paths.Length; i++)
                     {
                     try
                     {
-                        size = paths[i].Length;
+                        //size = paths[i].Length;
                         //string Str1 = String.Format("FileName = {0} Size = {1}; Result = {2}", files[i], size, result);
                         //MessageBox.Show(Str1, "Debug info");
                         //here should be processor for ID3 tags
-                        DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
-                        newMediaRow["fileName"] = paths[i];
-                        newMediaRow["Title"] = string.Format("Test {0}",i);
-                        newMediaRow["Year"] = string.Format("{0}",size);
+                        //UltraID3 myMp3 = new UltraID3();
+                        //myMp3.Read(paths[i]);
+                        //FullFileInfo fileInfo = new FullFileInfo();
+                        newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+                        //                      DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+                        newMediaRow["Title"] = TableForm[i][0];
+                        newMediaRow["Year"] = TableForm[i][1];
+                        newMediaRow["Singer"] = TableForm[i][2];
+                        newMediaRow["Album"] = TableForm[i][3];
+                        newMediaRow["Genre"] = TableForm[i][4];
+                        //newMediaRow["fileName"] = files[i];
                         dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+
                     }
                     catch (IOException)
                     {
-                        MessageBox.Show("WTF?", "Debug info");
+                        MessageBox.Show("WTF?", "Read file error");
                     }
 
                 }
