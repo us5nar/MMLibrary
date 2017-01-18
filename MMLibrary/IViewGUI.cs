@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace MMLibrary
 {
    public delegate void AddButtonEventHandler(IViewGUI sender);
+    public delegate void SearchButtonEventHandler(IViewGUI sender);
 
     public interface IViewGUI
     {
-         string FileNames { set; get; }
+         string FileName { set; get; }
          int FileSize { set; get; }
          int Duration { set; get; }
          string Title { set; get; }
@@ -27,5 +28,6 @@ namespace MMLibrary
         void DataGriIsEmpty();
         //LinkedList<string> CurrentRow;
         event AddButtonEventHandler AddButtonPushed;
+        event SearchButtonEventHandler SearchButtonPushed;
     }
 }

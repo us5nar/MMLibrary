@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.singerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.albomDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.genreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet1 = new System.Data.DataSet();
             this.dataTable1 = new System.Data.DataTable();
@@ -48,11 +48,11 @@
             this.dataColumn6 = new System.Data.DataColumn();
             this.SaveButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
-            this.SeachBox = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SearchButton = new System.Windows.Forms.Button();
-            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             this.playButton = new System.Windows.Forms.Button();
+            this.SearchBox = new System.Windows.Forms.TextBox();
+            this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -66,25 +66,18 @@
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.FileName,
             this.titleDataGridViewTextBoxColumn,
             this.singerDataGridViewTextBoxColumn,
             this.albomDataGridViewTextBoxColumn,
             this.genreDataGridViewTextBoxColumn,
-            this.yearDataGridViewTextBoxColumn});
+            this.yearDataGridViewTextBoxColumn,
+            this.FileName});
             this.dataGridView1.DataSource = this.bindingSource1;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 29);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 43);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(620, 150);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // FileName
-            // 
-            this.FileName.DataPropertyName = "FileName";
-            this.FileName.HeaderText = "FileName";
-            this.FileName.Name = "FileName";
-            this.FileName.ReadOnly = true;
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -115,6 +108,13 @@
             this.yearDataGridViewTextBoxColumn.DataPropertyName = "Year";
             this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
             this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
+            // 
+            // FileName
+            // 
+            this.FileName.DataPropertyName = "FileName";
+            this.FileName.HeaderText = "FileName";
+            this.FileName.Name = "FileName";
+            this.FileName.ReadOnly = true;
             // 
             // bindingSource1
             // 
@@ -167,7 +167,8 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(93, 185);
+            this.SaveButton.Location = new System.Drawing.Point(104, 217);
+            this.SaveButton.Margin = new System.Windows.Forms.Padding(13, 3, 3, 3);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 1;
@@ -177,26 +178,14 @@
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(12, 185);
+            this.AddButton.Location = new System.Drawing.Point(13, 217);
+            this.AddButton.Margin = new System.Windows.Forms.Padding(13, 3, 3, 3);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(75, 23);
             this.AddButton.TabIndex = 2;
             this.AddButton.Text = "Add";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
-            // 
-            // SeachBox
-            // 
-            this.SeachBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SeachBox.Cursor = System.Windows.Forms.Cursors.WaitCursor;
-            this.SeachBox.Location = new System.Drawing.Point(12, 3);
-            this.SeachBox.Name = "SeachBox";
-            this.SeachBox.Size = new System.Drawing.Size(539, 20);
-            this.SeachBox.TabIndex = 3;
-            this.SeachBox.Text = "Dummy text";
-            this.SeachBox.UseWaitCursor = true;
-            this.SeachBox.TextChanged += new System.EventHandler(this.SeachBox_TextChanged);
-            this.SeachBox.Enter += new System.EventHandler(this.SearchButton_Click);
             // 
             // openFileDialog1
             // 
@@ -206,7 +195,7 @@
             // 
             // SearchButton
             // 
-            this.SearchButton.Location = new System.Drawing.Point(557, 0);
+            this.SearchButton.Location = new System.Drawing.Point(448, 10);
             this.SearchButton.Name = "SearchButton";
             this.SearchButton.Size = new System.Drawing.Size(75, 23);
             this.SearchButton.TabIndex = 4;
@@ -214,33 +203,43 @@
             this.SearchButton.UseVisualStyleBackColor = true;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
             // 
-            // axWindowsMediaPlayer1
-            // 
-            this.axWindowsMediaPlayer1.Enabled = true;
-            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 214);
-            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
-            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
-            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(620, 130);
-            this.axWindowsMediaPlayer1.TabIndex = 5;
-            // 
             // playButton
             // 
-            this.playButton.Location = new System.Drawing.Point(175, 185);
+            this.playButton.Location = new System.Drawing.Point(195, 217);
+            this.playButton.Margin = new System.Windows.Forms.Padding(13, 3, 3, 3);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(75, 23);
             this.playButton.TabIndex = 6;
             this.playButton.Text = "Play";
             this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
+            // 
+            // SearchBox
+            // 
+            this.SearchBox.Location = new System.Drawing.Point(128, 12);
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.Size = new System.Drawing.Size(304, 20);
+            this.SearchBox.TabIndex = 7;
+           // this.SearchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
+            // 
+            // axWindowsMediaPlayer1
+            // 
+            this.axWindowsMediaPlayer1.Enabled = true;
+            this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(13, 259);
+            this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
+            this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
+            this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(620, 130);
+            this.axWindowsMediaPlayer1.TabIndex = 5;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 356);
+            this.ClientSize = new System.Drawing.Size(644, 401);
+            this.Controls.Add(this.SearchBox);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.axWindowsMediaPlayer1);
             this.Controls.Add(this.SearchButton);
-            this.Controls.Add(this.SeachBox);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.dataGridView1);
@@ -273,7 +272,6 @@
         private System.Windows.Forms.Button AddButton;
         private System.Data.DataColumn dataColumn4;
         private System.Data.DataColumn dataColumn5;
-        private System.Windows.Forms.TextBox SeachBox;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button SearchButton;
         private System.Data.DataColumn dataColumn6;
@@ -286,6 +284,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
         private System.Windows.Forms.Button playButton;
+        private System.Windows.Forms.TextBox SearchBox;
     }
 }
 

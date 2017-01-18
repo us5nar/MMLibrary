@@ -9,28 +9,15 @@ using System.Data;
 
 namespace MMLibrary
 {
-    public class Controller : IController, IModel
+    public class Controller : IController//, IModel
     {
         private bool AddIsPushed;
         private string[] FilePathForController;
         //private string[] FileNameForController;
 
-        public Controller(Form userView)
+        public Controller()
         {  }
-        //protected <FullFileInfo>
 
-        //public class FullFileInfo
-        //{
-        //    public string FilePath { set; get; }
-        //    public string FileNames { set; get; }
-        //    public int FileSize { set; get; }
-        //    public int Duration { set; get; }
-        //    public string Title { set; get; }
-        //    public string Year { set; get; }
-        //    public string Artist { set; get; }
-        //    public string Album { set; get; }
-        //    public string Genre { set; get; }
-        //}
         public void SearchButton(IViewGUI userView)
         {
             throw new NotImplementedException();
@@ -46,14 +33,7 @@ namespace MMLibrary
             AddIsPushed = true;
             FilePathForController = sender.FilePath; // receive FilePaths from Form1 via public Property file path which is defined in View Interface. 
                                                      //FileNameForController = sender.FileNames; // file name
-            DataTable ContrTable = new DataTable();
-            ContrTable.Columns.Add("Title", typeof(string));
-            ContrTable.Columns.Add("Year", typeof(string));
-            ContrTable.Columns.Add("Artist", typeof(string));
-            ContrTable.Columns.Add("Album", typeof(string));
-            ContrTable.Columns.Add("Genre", typeof(string));
-            ContrTable.Columns.Add("FilePath", typeof(string));
-            LinkedList<string> CurrentRow = null;
+          
             for (int i = 0; i < FilePathForController.Length; i++)
             {
                 UltraID3 myMp3 = new UltraID3();
@@ -68,13 +48,13 @@ namespace MMLibrary
                     sender.Album = string.Format("{0}", myMp3.Album);
                     sender.Genre = string.Format("{0}", myMp3.Genre);
                     // datastructure
-                    ContrTable.Rows.Add(sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre);
-                    sender.TableContr[i] = new string []{ sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre};                }
+                    
+                    sender.TableContr[i] = new string[] { sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre };
+                }
                 catch (HundredMilesSoftware.UltraID3Lib.ID3FileException)
                 {
                     MessageBox.Show("Reading ID3 Tag from file is wrong");
                 }
-
             }
         }
         private void ExtractTagInfo()
@@ -159,6 +139,11 @@ namespace MMLibrary
         }
 
         public void CheckfoDuplicates()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SearchButtonPrepare(IViewGUI userView)
         {
             throw new NotImplementedException();
         }

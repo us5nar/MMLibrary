@@ -8,6 +8,7 @@ namespace MMLibrary
 {
     public interface IModel
     {
+        //void Search(IViewGUI userView);
         bool AudioFileIsValid();
         bool TagIsValid();
         void UpdateXML();
