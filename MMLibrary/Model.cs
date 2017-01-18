@@ -17,6 +17,12 @@ namespace MMLibrary
         public Model()
         {
             MyTable = new DataTable();
+            MyTable.Columns.Add("Title", typeof(string));
+            MyTable.Columns.Add("Year", typeof(string));
+            MyTable.Columns.Add("Artist", typeof(string));
+            MyTable.Columns.Add("Album", typeof(string));
+            MyTable.Columns.Add("Genre", typeof(string));
+            MyTable.Columns.Add("FilePath", typeof(string));
         }
 
         public void AddButtonSignUp(IViewGUI userView)
@@ -55,14 +61,6 @@ namespace MMLibrary
         private void UserView_AddButtonPushed(IViewGUI sender)
         {
             TableFormModel = sender.TableContr;
-
-            MyTable.Columns.Add("Title", typeof(string));
-            MyTable.Columns.Add("Year", typeof(string));
-            MyTable.Columns.Add("Artist", typeof(string));
-            MyTable.Columns.Add("Album", typeof(string));
-            MyTable.Columns.Add("Genre", typeof(string));
-            MyTable.Columns.Add("FilePath", typeof(string));
-
             for (int i = 0; i < TableFormModel.GetLength(0); i++)
             {
                 MyTable.Rows.Add(TableFormModel[i][0], TableFormModel[i][1], TableFormModel[i][2], TableFormModel[i][3], TableFormModel[i][4]);
