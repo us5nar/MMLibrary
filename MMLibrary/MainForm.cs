@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using MMLibrary;
 using HundredMilesSoftware.UltraID3Lib;
+using System.Collections.Generic;
 //using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Drawing;
@@ -13,16 +14,18 @@ using HundredMilesSoftware.UltraID3Lib;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Form1 : Form , IViewGUI
+    public partial class Form1 : Form , IViewGUI, IModel
     {
         private const string m_XmlFileName = @"Library.xml";
         DataRow newMediaRow;
         private string[][] TableForm;// = new string[openFileDialog1.FileNames.Length][6];
+        //private string[][] TableBackFromModelToFormPrivat;
+        private int UpdatedGridSize;
 
         private string[] FilePathsField;
-        private string FileNamesField;
-        private int FileSizeField;
-        private int DurationField;
+        private string[] FileNamesField;
+        //private int FileSizeField;
+        //private int DurationField;
         private string TitleField;
         private string YearField;
         private string ArtistField;
@@ -35,7 +38,7 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             Controller Contr = new Controller();
-            Model ModelInst = new Model();
+            Model ModelInst = new Model(this);
             Contr.AddButtonPrepare(this);
             ModelInst.AddButtonSignUp(this);
             ModelInst.SearchButtonSignUp(this);
@@ -52,6 +55,7 @@ namespace WindowsFormsApplication1
                 TableForm = value;
             }
         }
+
         public string SeachBoxText
         {
             get
@@ -138,7 +142,14 @@ namespace WindowsFormsApplication1
             }
             set { }
         }
-
+        public string[] FileNames
+        {
+            get
+            {
+                return FileNamesField;
+            }
+            set { }
+        }
         public string Year
         {
             get
@@ -191,13 +202,14 @@ namespace WindowsFormsApplication1
             }
         }
 
-        string IViewGUI.FileName
+
+
+        public int NewGridSize
         {
             get
             {
                 throw new NotImplementedException();
             }
-
             set
             {
                 throw new NotImplementedException();
@@ -223,18 +235,29 @@ namespace WindowsFormsApplication1
         {
             DataTable table = dataSet1.Tables["MLlist"].GetChanges();
             if (table.Rows.Count > 0)
-                {
+            {
                 MessageBox.Show("Content was modified!!!");
-                }
+            }
+            Dispose(true);
         }
-
+        public void GridWasChangedSignUp(IModel sender)
+        {
+            sender.GridWasChanged += Sender_GridWasChanged;
+        }
+        
+        private void Sender_GridWasChanged(IModel sender)
+        {
+            UpdatedGridSize = sender.NewGridSize;
+            TableForm = new string[UpdatedGridSize][];
+        }
+        /*
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             string sent = "Title should be here";//chatBox.Text;
             SearchBox.AppendText(sent);
             //displayBox.AppendText(sent);
             //displayBox.AppendText(Environment.NewLine);
-        }
+        }*/
         public event AddButtonEventHandler AddButtonPushed;
 
         private void OnAddButtonPushed()
@@ -256,49 +279,58 @@ namespace WindowsFormsApplication1
             //dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
             //==========================================================
 
-            int size = -1;
-            string[] files, paths;
+            //int size = -1;
+            int k = 0;
+            string[] filesName, paths;
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
-                files = openFileDialog1.SafeFileNames;
+                filesName = openFileDialog1.SafeFileNames;
                 paths = openFileDialog1.FileNames;
+
                 FilePathsField = paths;
+                FileNamesField = filesName;
 
                 TableForm = new string[paths.Length][];
+
                 OnAddButtonPushed(); // when "Add" was pressed, this triggers event for Controller , and sends reference to "this" Form1 object to the Controller class 
                                      //  where Controller class is able to extract info from Form1 via public properties, such as FilePath 
                                      // foreach (string value in files)
-
-                for (int i = 0; i < paths.Length; i++)
+                if (UpdatedGridSize > 0 )
                 {
-                    newMediaRow = dataSet1.Tables["MLlist"].NewRow();
-
-                    newMediaRow["Title"] = TableForm[i][0];
-                    newMediaRow["Year"] = TableForm[i][1];
-                    newMediaRow["Singer"] = TableForm[i][2];
-                    newMediaRow["Album"] = TableForm[i][3];
-                    newMediaRow["Genre"] = TableForm[i][4];
-                    newMediaRow["fileName"] = paths[i];
-                    dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                    dataSet1.Clear();
+                    int m = 0;
+                    for (int i = 0; i < TableForm.Length; i++)
+                    {
+                        newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+                        newMediaRow["fileName"] = paths[k];
+                        if (TableForm[i][0] == "")
+                        {
+                            newMediaRow["Title"] = filesName[k];
+                            TableForm[i][0] = filesName[k].Substring(0,filesName[k].IndexOf('.'));
+                            k++;
+                        }
+                        else
+                        {
+                            newMediaRow["Title"] = TableForm[i][0];
+                        }
+                        newMediaRow["Year"] = TableForm[i][1];
+                        newMediaRow["Singer"] = TableForm[i][2];
+                        newMediaRow["Album"] = TableForm[i][3];
+                        newMediaRow["Genre"] = TableForm[i][4];
+                        newMediaRow["fileName"] = FilePathsField[m]; m++;
+                        dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                    }
                 }
-                //string file = openFileDialog1.FileName;
-              
             }
-            //Console.WriteLine(size); // <-- Shows file size in debugging mode.
-            //Console.WriteLine(result); // <-- For debugging use.
         }
 
-        /*  private void Form1_AddButtonPushed(IViewGUI sender)
-          {
-           //   Contr. = true;
-          }*/
-        /*
-        private void UserView_AddButtonPushed(IViewGUI sender)
-        {
-            MessageBox.Show("The Add button was pushed , event fired in Controller");
-        }*/
+       // public event ChangedGridSizeHandler GridWasChanged;
         public event SearchButtonEventHandler SearchButtonPushed;
+        public event ChangedGridSizeHandler GridWasChanged;
+
+        //public event ChangedGridSizeHandler GridWasChanged;
+
         private void OnSearchButtonPushed()
         {
             if (SearchButtonPushed != null)
@@ -316,35 +348,35 @@ namespace WindowsFormsApplication1
             //        dataGridView1.CurrentCell = dataGridView1[0, i];
             //        return;
             //    }
+            int k = 0;
             SearchBoxField = SearchBox.Text;
             OnSearchButtonPushed();
-            /*DataRowCollection allRows;
-            string selectString = "Title Like '%" + SeachBox.Text.Trim() + "%'";
-         
-            if (dataGridView1.Rows.Count != 0 && dataGridView1.Rows != null)
+            if (UpdatedGridSize > 0)
+            {
+                dataSet1.Clear();
+                for (int i = 0; i < UpdatedGridSize; i++)
                 {
-                allRows = ((DataTable)dataGridView1.DataSource).Rows;
+                    newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
-                DataRow[] searchedRows = ((DataTable)dataGridView1.DataSource).Select(selectString);
-
-                int rowIndex = allRows.IndexOf(searchedRows[0]);
-
-                dataGridView1.CurrentCell = dataGridView1[0, rowIndex];
-            }*/
+                    newMediaRow["Title"] = TableForm[i][0];
+                    newMediaRow["Year"] = TableForm[i][1];
+                    newMediaRow["Singer"] = TableForm[i][2];
+                    newMediaRow["Album"] = TableForm[i][3];
+                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["fileName"] = FilePathsField[k]; k++;
+                    dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                }
+            }
+            else if(UpdatedGridSize == 0 && TableForm == null)
+            {
+                dataSet1.Clear();
+            }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //CONTINUE HERE!!!
-            //      private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-            //{
-            //    axWindowsMediaPlayer1.URL = paths[listBox1.SelectedIndex];
-            //}
-            //string[] fileNameFromDataset = dataGridView1.f
-            //string firstCellValue = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            //string secondCellValue = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            //MessageBox.Show(firstCellValue, "Debug info");
-            //axWindowsMediaPlayer1.URL = firstCellValue;
+            string lastCellValue = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
+            axWindowsMediaPlayer1.URL = lastCellValue;
         }
 
         public void DataGriIsEmpty()

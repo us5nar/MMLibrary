@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MMLibrary
+﻿namespace MMLibrary
 {
+    public delegate void ChangedGridSizeHandler(IModel sender);
     public interface IModel
     {
         //void Search(IViewGUI userView);
-        bool AudioFileIsValid();
-        bool TagIsValid();
-        void UpdateXML();
-        void ReadFromXML();
-        void PlayAudio();
-        void SendNewDataToController();
+        /* bool AudioFileIsValid();
+         bool TagIsValid();
+         void UpdateXML();
+         void ReadFromXML();
+         void PlayAudio();
+         void SendNewDataToController();*/
         // Check for duplicates
-        void CheckfoDuplicates();
+        //void CheckfoDuplicates();
+        //event ChangedGridSizeHandler GridWasChanged;
+        int NewGridSize { set; get; }
+        event ChangedGridSizeHandler GridWasChanged;
     }
 }

@@ -11,9 +11,9 @@ namespace MMLibrary
 {
     public class Controller : IController//, IModel
     {
-        private bool AddIsPushed;
+       // private bool AddIsPushed;
         private string[] FilePathForController;
-        //private string[] FileNameForController;
+        private string[] FileNameForController;
 
         public Controller()
         {  }
@@ -30,10 +30,11 @@ namespace MMLibrary
 
         private void UserView_AddButtonPushed(IViewGUI sender)  // sender is the object of Form1 class, through which we can access public properties
         {
-            AddIsPushed = true;
+            //AddIsPushed = true;
             FilePathForController = sender.FilePath; // receive FilePaths from Form1 via public Property file path which is defined in View Interface. 
-                                                     //FileNameForController = sender.FileNames; // file name
-          
+                                                     //FileNameForController = sender.FileNames; // file name+
+            FileNameForController = sender.FileNames;
+            int k = 0;
             for (int i = 0; i < FilePathForController.Length; i++)
             {
                 UltraID3 myMp3 = new UltraID3();
@@ -41,7 +42,16 @@ namespace MMLibrary
                 {
                     myMp3.Read(FilePathForController[i]);
                     //FullFileInfo InfoObj = new FullFileInfo();
-                    sender.Title = string.Format("{0}", myMp3.Title);
+                    
+                    if (myMp3.Title == "")
+                    {
+                        sender.Title = FileNameForController[k].Substring(0, FileNameForController[k].IndexOf('.'));
+                        k++;
+                    }
+                    else
+                    {
+                        sender.Title = string.Format("{0}", myMp3.Title);
+                    }
                     //CurrentRow.AddLast(sender.Title);
                     sender.Year = string.Format("{0}", myMp3.Year);
                     sender.Artist = string.Format("{0}", myMp3.Artist);
