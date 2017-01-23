@@ -12,13 +12,11 @@ namespace MMLibrary
     public class Model : IModel
     {
         private string[][] TableFromModel;
-        private string[][] TempTableFromModel;
 
         DataTable MyTable;
         DataTable UpdatedTable;
         private string searchBox;
         private int ModifiedGridSize;
-        private int LastRowNumber;
 
         public int NewGridSize
         {
@@ -41,7 +39,6 @@ namespace MMLibrary
             UpdatedTable = new DataTable();
             //Form1 FormInst = new Form1();
             //GridWasChangedSignUp(this);
-            LastRowNumber = 0;
             ModifiedGridSize = 0;
             MyTable.Columns.Add("Title", typeof(string));
             MyTable.Columns.Add("Year", typeof(string));
@@ -97,7 +94,7 @@ namespace MMLibrary
                         TableFromModel = new string[UpdatedTable.Rows.Count][];
                         for (int i = 0; i < UpdatedTable.Rows.Count; i++)
                         {
-                            TableFromModel[i] = new string[5];
+                            TableFromModel[i] = new string[6]; // 6 columns in the table
                             for (int j = 0; j < TableFromModel[i].Length; j++)
                             {
                                 TableFromModel[i][j] = UpdatedTable.Rows[i].Field<string>(j);
@@ -145,10 +142,9 @@ namespace MMLibrary
 
             if (MyTable.Rows.Count == 0)
             {
-                LastRowNumber = 0;
                 for (int i = 0; i < TableFromModel.GetLength(0); i++) 
                 {
-                    MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4]);
+                    MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
                     ModifiedGridSize++;
                 }
                 if (GridWasChanged != null)
@@ -161,13 +157,13 @@ namespace MMLibrary
             {
                 for (int i = 0; i < TableFromModel.GetLength(0); i++)
                 {
-                    CompareTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4]);
+                    CompareTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4],TableFromModel[i][5]);
                     var result = CompareTable.AsEnumerable().Intersect(MyTable.AsEnumerable(), DataRowComparer.Default);
                     //var foundRows = MyTable.AsEnumerable().Where(r => r.Field<String>("Title").Equals(TableFromModel[i][0]) && r.Field<String>("Year").Equals(TableFromModel[i][1]) && r.Field<String>("Artist").Equals(TableFromModel[i][2]) && r.Field<String>("Album").Equals(TableFromModel[i][3]) && r.Field<String>("Genre").Equals(TableFromModel[i][4]));
                     if (result.Count<DataRow>() == 0)
                     {
                         ModifiedGridSize++;
-                        MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4]);
+                        MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
                         //TempTableFromModel[k] =  new string[5];
                         //TempTableFromModel[k] = TableFromModel[i];
                     }
@@ -178,7 +174,7 @@ namespace MMLibrary
                 TableFromModel = new string[MyTable.Rows.Count][];
                 for (int i = 0; i < MyTable.Rows.Count; i++)
                 {
-                    TableFromModel[i] = new string[5];
+                    TableFromModel[i] = new string[6];
                     for (int j = 0; j < TableFromModel[i].Length; j++)
                     {
                         TableFromModel[i][j] = MyTable.Rows[i].Field<string>(j);

@@ -90,8 +90,8 @@ namespace WindowsFormsApplication1
             // 
             // singerDataGridViewTextBoxColumn
             // 
-            this.singerDataGridViewTextBoxColumn.DataPropertyName = "Singer";
-            this.singerDataGridViewTextBoxColumn.HeaderText = "Singer";
+            this.singerDataGridViewTextBoxColumn.DataPropertyName = "Artist";
+            this.singerDataGridViewTextBoxColumn.HeaderText = "Artist";
             this.singerDataGridViewTextBoxColumn.Name = "singerDataGridViewTextBoxColumn";
             // 
             // albomDataGridViewTextBoxColumn
@@ -149,7 +149,7 @@ namespace WindowsFormsApplication1
             // 
             // dataColumn2
             // 
-            this.dataColumn2.ColumnName = "Singer";
+            this.dataColumn2.ColumnName = "Artist";
             // 
             // dataColumn3
             // 
@@ -166,7 +166,7 @@ namespace WindowsFormsApplication1
             // 
             // dataColumn6
             // 
-            this.dataColumn6.ColumnName = "FileName";
+            this.dataColumn6.ColumnName = "FilePath";
             // 
             // SaveButton
             // 

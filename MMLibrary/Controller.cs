@@ -59,7 +59,7 @@ namespace MMLibrary
                     sender.Genre = string.Format("{0}", myMp3.Genre);
                     // datastructure
                     
-                    sender.TableContr[i] = new string[] { sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre };
+                    sender.TableContr[i] = new string[] { sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre, sender.FilePath[i]};
                 }
                 catch (HundredMilesSoftware.UltraID3Lib.ID3FileException)
                 {
