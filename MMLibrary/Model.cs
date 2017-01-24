@@ -341,6 +341,7 @@ namespace MMLibrary
             MyTable.Clear();
 
             XElement x = XElement.Load(old_XmlFileName);
+            //[anton]If file does not exist - we have exception here
 
             IEnumerable<XElement> de = from el in x.Descendants()
                                        where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")

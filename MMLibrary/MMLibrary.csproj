@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
+    <Compile Include="DataGridWithFilter\ColumnFilterClickedEventArg.cs" />
+    <Compile Include="DataGridWithFilter\DataGridFilterHeader.cs" />
+    <Compile Include="DataGridWithFilter\DataGridViewWithFilter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataGridWithFilter\FilterStatus.cs" />
     <Compile Include="IController.cs" />
     <Compile Include="IModel.cs" />
     <Compile Include="IViewGUI.cs" />
