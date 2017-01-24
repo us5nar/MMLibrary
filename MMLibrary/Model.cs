@@ -293,8 +293,8 @@ namespace MMLibrary
 
         private void UserView_FormOpened(IViewGUI sender)
         {
-            ReadXMLNewResults();
-
+            //ReadXMLNewResults();
+            ReadXMLPreviousResults();
             TableFromModel = null;
             TableFromModel = new string[MyTable.Rows.Count][];
             for (int i = 0; i < MyTable.Rows.Count; i++)
