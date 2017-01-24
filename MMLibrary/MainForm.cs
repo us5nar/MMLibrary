@@ -32,7 +32,7 @@ namespace WindowsFormsApplication1
         private string GenreField;
 
         private string SearchBoxField;
-
+        private string SearchBoxFieldBefore;
         public Form1()
         {
             InitializeComponent();
@@ -43,6 +43,7 @@ namespace WindowsFormsApplication1
             ModelInst.SearchButtonSignUp(this);
             ModelInst.SaveButtonSignUp(this);
             ModelInst.OpenFormSignUp(this);
+            ModelInst.SearchBoxTextChangedSignUp(this);
         }
 
         public string[][] TableContr
@@ -152,8 +153,8 @@ namespace WindowsFormsApplication1
         
         public int NewGridSize
         {
-            get { return 0; }
-            set { }
+            get { return UpdatedGridSize; }
+            set { UpdatedGridSize = value; }
         }
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
@@ -209,10 +210,6 @@ namespace WindowsFormsApplication1
             TableForm = new string[UpdatedGridSize][];
         }
         
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-           // MessageBox.Show( "TextChanged modified!!!");
-        }
         public event AddButtonEventHandler AddButtonPushed;
 
         private void OnAddButtonPushed()
@@ -264,6 +261,7 @@ namespace WindowsFormsApplication1
         public event ChangedGridSizeHandler GridWasChanged;
         public event SaveButtonHandler SaveButtonPushed;
         public event OpenFormHandler FormOpened;
+        public event SearchBoxTextChangedHandler SearchBoxTextChanged;
 
         private void OnSearchButtonPushed()
         {
@@ -378,6 +376,59 @@ namespace WindowsFormsApplication1
         public void ReadFromXML()
         {
             throw new NotImplementedException();
+        }
+        private void OnSearchBoxTextChanged()
+        {
+            if (SearchBoxTextChanged != null)
+            {
+                SearchBoxTextChanged(this);
+            }
+        }
+        private void SearchBox_TextChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show("Text was modified!!!");
+
+            SearchBoxField = SearchBox.Text;
+            OnSearchBoxTextChanged();
+
+            if (SearchBoxField.Length == 0 && SearchBoxFieldBefore.Length > SearchBoxField.Length)
+            {
+                dataSet1.Clear();
+                for (int i = 0; i < UpdatedGridSize; i++)
+                {
+                    newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+
+                    newMediaRow["Title"] = TableForm[i][0];
+                    newMediaRow["Year"] = TableForm[i][1];
+                    newMediaRow["Artist"] = TableForm[i][2];
+                    newMediaRow["Album"] = TableForm[i][3];
+                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["FilePath"] = TableForm[i][5];
+                    dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                }
+            }
+            else if (UpdatedGridSize == 0 && TableForm == null)
+            {
+                 dataSet1.Clear();
+            }
+            else if (UpdatedGridSize > 0)
+            {
+                dataSet1.Clear();
+                for (int i = 0; i < UpdatedGridSize; i++)
+                {
+                    newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+
+                    newMediaRow["Title"] = TableForm[i][0];
+                    newMediaRow["Year"] = TableForm[i][1];
+                    newMediaRow["Artist"] = TableForm[i][2];
+                    newMediaRow["Album"] = TableForm[i][3];
+                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["FilePath"] = TableForm[i][5];
+                    dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                }
+            }
+      
+            SearchBoxFieldBefore = SearchBoxField;
         }
     }
 }

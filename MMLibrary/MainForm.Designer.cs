@@ -224,6 +224,7 @@ namespace WindowsFormsApplication1
             this.SearchBox.Name = "SearchBox";
             this.SearchBox.Size = new System.Drawing.Size(304, 20);
             this.SearchBox.TabIndex = 7;
+            this.SearchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
             // 
             // axWindowsMediaPlayer1
             // 

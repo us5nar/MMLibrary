@@ -21,6 +21,7 @@ namespace MMLibrary
         DataTable MyTable;
         DataTable UpdatedTable;
         private string searchBox;
+        private string SearchBoxAfter;
         private int ModifiedGridSize;
 
         public int NewGridSize
@@ -58,6 +59,8 @@ namespace MMLibrary
             UpdatedTable.Columns.Add("FilePath", typeof(string));
 
             FormToModel.GridWasChangedSignUp(this);
+            SearchBoxAfter = "";
+            searchBox = "";
         }
 
         public void AddButtonSignUp(IViewGUI userView)
@@ -76,11 +79,50 @@ namespace MMLibrary
         {
             userView.FormOpened += UserView_FormOpened;
         }
+        public void SearchBoxTextChangedSignUp(IViewGUI userView)
+        {
+            userView.SearchBoxTextChanged += UserView_SearchBoxTextChanged;
+        }
+
+        private void UserView_SearchBoxTextChanged(IViewGUI sender)
+        {
+            SearchBoxAfter = sender.SeachBoxText;
+            if (SearchBoxAfter.Length < searchBox.Length && SearchBoxAfter.Length >= 0)
+            {
+                ReadXMLPreviousResults();
+                TableFromModel = null;
+                TableFromModel = new string[MyTable.Rows.Count][];
+                for (int i = 0; i < MyTable.Rows.Count; i++)
+                {
+                    TableFromModel[i] = new string[6];
+                    for (int j = 0; j < TableFromModel[i].Length; j++)
+                    {
+                        TableFromModel[i][j] = MyTable.Rows[i].Field<string>(j);
+                    }
+                }
+                if (GridWasChanged != null)
+                {
+                    GridWasChanged(this);
+                    sender.TableContr = TableFromModel;
+                    if (TableFromModel == null)
+                    {
+                        sender.NewGridSize = 0;
+                    }
+                    else
+                    {
+                        sender.NewGridSize = TableFromModel.Length;
+                    }
+                }
+            }
+           
+            UserView_SearchButtonPushed(sender);
+        }
 
         private void UserView_SearchButtonPushed(IViewGUI sender)
         {
             searchBox = sender.SeachBoxText;
-            UpdateXMLPreviousResults();
+            //SearchBoxAfter = searchBox;
+           // UpdateXMLPreviousResults();
             if (TableFromModel != null)
             {
                 foreach (DataRow resultedRow in MyTable.Rows)  // Creat new table from old table based on search filter
@@ -117,6 +159,14 @@ namespace MMLibrary
                             if (TableFromModel != null)
                             {
                                 sender.TableContr = TableFromModel;
+                                if (TableFromModel == null)
+                                {
+                                    sender.NewGridSize = 0;
+                                }
+                                else
+                                {
+                                    sender.NewGridSize = TableFromModel.Length;
+                                }
                             }
                         }
                     }
@@ -127,6 +177,14 @@ namespace MMLibrary
                         {
                             GridWasChanged(this);
                             sender.TableContr = TableFromModel;
+                            if (TableFromModel == null)
+                            {
+                                sender.NewGridSize = 0;
+                            }
+                            else
+                            {
+                                sender.NewGridSize = TableFromModel.Length;
+                            }
                         }
                     }
                 }
@@ -150,7 +208,7 @@ namespace MMLibrary
             ModifiedGridSize = 0;
 
             TableFromModel = sender.TableContr; // receive data from Grid to the private double array (TableFromModel)
-            UpdateXMLPreviousResults();
+            //UpdateXMLPreviousResults();
             if (MyTable.Rows.Count == 0)
             {
                 for (int i = 0; i < TableFromModel.GetLength(0); i++) 
@@ -163,6 +221,14 @@ namespace MMLibrary
                 {
                     GridWasChanged(this);
                     sender.TableContr = TableFromModel;
+                    if (TableFromModel == null)
+                    {
+                        sender.NewGridSize = 0;
+                    }
+                    else
+                    {
+                        sender.NewGridSize = TableFromModel.Length;
+                    }
                 }
             }
             else
@@ -194,9 +260,18 @@ namespace MMLibrary
                 {
                     GridWasChanged(this);
                     sender.TableContr = TableFromModel;
+                    if (TableFromModel == null)
+                    {
+                        sender.NewGridSize = 0;
+                    }
+                    else
+                    {
+                        sender.NewGridSize = TableFromModel.Length;
+                    }
                 }
             }
-            UpdateXMLNewResults();// Save datatable to XML after adding a new batch of files
+            //UpdateXMLNewResults();// Save datatable to XML after adding a new batch of files
+            UpdateXMLPreviousResults();
         }
 
         public void ReadFromXML()
@@ -226,6 +301,14 @@ namespace MMLibrary
             {
                 GridWasChanged(this);
                 sender.TableContr = TableFromModel;
+                if (TableFromModel == null)
+                {
+                    sender.NewGridSize = 0;
+                }
+                else
+                {
+                    sender.NewGridSize = TableFromModel.Length;
+                }
             }
         }
 
@@ -244,10 +327,42 @@ namespace MMLibrary
 
         private void ReadXMLPreviousResults()
         {
-            MyTable.Clear();
+            //MyTable.Clear();
             //StringReader ReadOld = new StringReader();
-            MyTable.ReadXml(old_XmlFileName);
+            //MyTable.ReadXml(old_XmlFileName);
+            MyTable.Clear();
+
+            XElement x = XElement.Load(old_XmlFileName);
+
+            IEnumerable<XElement> de = from el in x.Descendants()
+                                       where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
+                                       select el;
+            int i = 0;
+            object[] rowArray = new object[6];
+            DataRow NodeToRow = null;
+
+            foreach (var d in de)
+            {
+                //    Console.WriteLine(d.Value);
+                if (i >= 6)
+                {
+                    NodeToRow = MyTable.NewRow();
+                    NodeToRow.ItemArray = rowArray;
+                    MyTable.Rows.Add(NodeToRow);
+                    ModifiedGridSize++;
+
+                    i = 0;
+                    rowArray = new object[6];
+                }
+                rowArray[i] = d.Value;
+                i++;
+            }
+            NodeToRow = MyTable.NewRow();
+            NodeToRow.ItemArray = rowArray;
+            MyTable.Rows.Add(NodeToRow);
+            ModifiedGridSize++;
         }
+    
         private void ReadXMLNewResults()
         {
             MyTable.Clear();

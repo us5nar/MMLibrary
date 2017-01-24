@@ -10,6 +10,7 @@ namespace MMLibrary
    public delegate void SearchButtonEventHandler(IViewGUI sender);
    public delegate void SaveButtonHandler(IViewGUI sender);
     public delegate void OpenFormHandler(IViewGUI sender);
+    public delegate void SearchBoxTextChangedHandler(IViewGUI sender);
 
     public interface IViewGUI
     {
@@ -23,7 +24,7 @@ namespace MMLibrary
         string Genre { set; get; }
         string[] FilePaths { set; get; }
         string[] FileNames { set; get; }
-
+        int NewGridSize{ set; get; }
         string[][] TableContr { set; get; }
         //string[][] TableBackFromModelToForm1 { set; get; }
         string SeachBoxText { set; get; }
@@ -35,5 +36,6 @@ namespace MMLibrary
         event SearchButtonEventHandler SearchButtonPushed;
         event SaveButtonHandler SaveButtonPushed;
         event OpenFormHandler FormOpened;
+        event SearchBoxTextChangedHandler SearchBoxTextChanged;
     }
 }
