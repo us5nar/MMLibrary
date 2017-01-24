@@ -30,6 +30,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         private void InitializeComponent()
         {
+            FirstRun = true;
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -82,6 +83,7 @@ namespace WindowsFormsApplication1
             this.dataGridView1.Size = new System.Drawing.Size(620, 150);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellValueChanged);
             // 
             // titleDataGridViewTextBoxColumn
             // 
@@ -262,7 +264,6 @@ namespace WindowsFormsApplication1
             this.PerformLayout();
 
         }
-
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -286,10 +287,11 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.DataGridViewTextBoxColumn albomDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn genreDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
+        //private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.TextBox SearchBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn FilePath;
+        private bool FirstRun;
     }
 }
 

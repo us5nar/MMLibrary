@@ -44,6 +44,7 @@ namespace WindowsFormsApplication1
             ModelInst.SaveButtonSignUp(this);
             ModelInst.OpenFormSignUp(this);
             ModelInst.SearchBoxTextChangedSignUp(this);
+            FirstRun = false;
         }
 
         public string[][] TableContr
@@ -159,13 +160,7 @@ namespace WindowsFormsApplication1
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show("bindingSource1_CurrentChanged!!!");
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            //dataSet1.WriteXml(m_XmlFileName);
-            OnSaveButtonPushed();
+           //MessageBox.Show("bindingSource1_CurrentChanged!!!");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -295,13 +290,7 @@ namespace WindowsFormsApplication1
                 dataSet1.Clear();
             }
         }
-        private void OnSaveButtonPushed()
-        {
-            if (SaveButtonPushed != null)
-            {
-                SaveButtonPushed(this);
-            }
-        }
+
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string lastCellValue = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
@@ -367,6 +356,44 @@ namespace WindowsFormsApplication1
             string lastCellValue = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString(); //column 5
             axWindowsMediaPlayer1.URL = lastCellValue;
         }
+        private void OnSaveButtonPushed()
+        {
+            if (SaveButtonPushed != null)
+            {
+                SaveButtonPushed(this);
+            }
+        }
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            //dataSet1.WriteXml(m_XmlFileName);
+            OnSaveButtonPushed();
+        }
+        private void DataGridView1_CellValueChanged(object sender, EventArgs e)
+        {
+            // DataTable TempTable = ((DataTable)this.dataGridView1.DataSource).Copy();
+            // dataSet1.Clear();
+            // dataSet1.Tables["MLlist"].Copy(TempTable);//.Add(TempTable);
+            //dataSet1.Tables.Add(TempTable.Copy());
+            if (FirstRun)
+            {  }
+            else
+            {
+                DataRow newMediaRow;
+                for (int i = 0; i < dataSet1.Tables[0].Rows.Count; i++)
+                {
+                    newMediaRow = dataSet1.Tables["MLlist"].Rows[i];
+
+                    TableForm[i][0] = newMediaRow.ItemArray[0].ToString();//["Title"].;
+                    TableForm[i][1] = newMediaRow.ItemArray[1].ToString();// newMediaRow["Year"] ;
+                    TableForm[i][2] = newMediaRow.ItemArray[2].ToString(); //TableForm[i][2];
+                    TableForm[i][3] = newMediaRow.ItemArray[3].ToString(); //TableForm[i][3];
+                    TableForm[i][4] = newMediaRow.ItemArray[4].ToString(); //TableForm[i][4];
+                    TableForm[i][5] = newMediaRow.ItemArray[5].ToString(); //TableForm[i][5];
+                                                                           //dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                }
+                OnSaveButtonPushed();
+            }
+        }
 
         public void UpdateXML()
         {
@@ -427,8 +454,8 @@ namespace WindowsFormsApplication1
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }
             }
-      
             SearchBoxFieldBefore = SearchBoxField;
         }
+
     }
 }

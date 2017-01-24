@@ -280,8 +280,16 @@ namespace MMLibrary
         }
         private void UserView_SaveButtonPushed(IViewGUI sender)
         {
-            UpdateXMLNewResults();
-        }
+            TableFromModel = sender.TableContr; // receive data from Grid to the private double array (TableFromModel)
+            MyTable.Clear();
+            //UpdateXMLPreviousResults();
+            for (int i = 0; i < TableFromModel.GetLength(0); i++)
+            {
+                MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
+                //ModifiedGridSize++;
+            }
+            UpdateXMLPreviousResults();
+          }
 
         private void UserView_FormOpened(IViewGUI sender)
         {
