@@ -38,7 +38,7 @@ namespace WindowsFormsApplication1
             this.albomDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.genreDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yearDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.dataSet1 = new System.Data.DataSet();
             this.dataTable1 = new System.Data.DataTable();
@@ -64,8 +64,10 @@ namespace WindowsFormsApplication1
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.titleDataGridViewTextBoxColumn,
@@ -73,13 +75,12 @@ namespace WindowsFormsApplication1
             this.albomDataGridViewTextBoxColumn,
             this.genreDataGridViewTextBoxColumn,
             this.yearDataGridViewTextBoxColumn,
-            this.FileName});
+            this.FilePath});
             this.dataGridView1.DataSource = this.bindingSource1;
             this.dataGridView1.Location = new System.Drawing.Point(12, 43);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(620, 150);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentDoubleClick);
             // 
             // titleDataGridViewTextBoxColumn
@@ -112,12 +113,12 @@ namespace WindowsFormsApplication1
             this.yearDataGridViewTextBoxColumn.HeaderText = "Year";
             this.yearDataGridViewTextBoxColumn.Name = "yearDataGridViewTextBoxColumn";
             // 
-            // FileName
+            // FilePath
             // 
-            this.FileName.DataPropertyName = "FileName";
-            this.FileName.HeaderText = "FileName";
-            this.FileName.Name = "FileName";
-            this.FileName.ReadOnly = true;
+            this.FilePath.DataPropertyName = "FilePath";
+            this.FilePath.HeaderText = "FilePath";
+            this.FilePath.Name = "FilePath";
+            this.FilePath.ReadOnly = true;
             // 
             // bindingSource1
             // 
@@ -177,7 +178,7 @@ namespace WindowsFormsApplication1
             this.SaveButton.TabIndex = 1;
             this.SaveButton.Text = "Save";
             this.SaveButton.UseVisualStyleBackColor = true;
-            this.SaveButton.Click += new System.EventHandler(this.button1_Click);
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // AddButton
             // 
@@ -223,7 +224,6 @@ namespace WindowsFormsApplication1
             this.SearchBox.Name = "SearchBox";
             this.SearchBox.Size = new System.Drawing.Size(304, 20);
             this.SearchBox.TabIndex = 7;
-           // this.SearchBox.TextChanged += new System.EventHandler(this.SearchBox_TextChanged);
             // 
             // axWindowsMediaPlayer1
             // 
@@ -259,7 +259,7 @@ namespace WindowsFormsApplication1
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
         }
 
         #endregion
@@ -288,6 +288,7 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.DataGridViewTextBoxColumn FileName;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.TextBox SearchBox;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FilePath;
     }
 }
 

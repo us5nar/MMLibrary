@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Xml;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsApplication1;
+using System.Xml.Linq;
+using System.Windows.Forms;
 //using UltraID3Lib;
 
 namespace MMLibrary
@@ -12,7 +16,8 @@ namespace MMLibrary
     public class Model : IModel
     {
         private string[][] TableFromModel;
-
+        private const string old_XmlFileName = @"Library_Previous.xml";
+        private const string new_XmlFileName = @"Library_Current.xml";
         DataTable MyTable;
         DataTable UpdatedTable;
         private string searchBox;
@@ -35,10 +40,8 @@ namespace MMLibrary
 
         public Model(IViewGUI FormToModel)
         {
-            MyTable = new DataTable();
-            UpdatedTable = new DataTable();
-            //Form1 FormInst = new Form1();
-            //GridWasChangedSignUp(this);
+            MyTable = new DataTable() { TableName = "TableAsInGrid" } ;
+            UpdatedTable = new DataTable() { TableName = "TemporaryTableAfterSearch" }; 
             ModifiedGridSize = 0;
             MyTable.Columns.Add("Title", typeof(string));
             MyTable.Columns.Add("Year", typeof(string));
@@ -65,11 +68,19 @@ namespace MMLibrary
         {
             userView.SearchButtonPushed += UserView_SearchButtonPushed; ;
         }
+        public void SaveButtonSignUp(IViewGUI userView)
+        {
+            userView.SaveButtonPushed += UserView_SaveButtonPushed;
+        }
+        public void OpenFormSignUp(IViewGUI userView)
+        {
+            userView.FormOpened += UserView_FormOpened;
+        }
 
         private void UserView_SearchButtonPushed(IViewGUI sender)
         {
             searchBox = sender.SeachBoxText;
-            
+            UpdateXMLPreviousResults();
             if (TableFromModel != null)
             {
                 foreach (DataRow resultedRow in MyTable.Rows)  // Creat new table from old table based on search filter
@@ -123,9 +134,9 @@ namespace MMLibrary
                 MyTable = UpdatedTable.Copy();
                 UpdatedTable.Clear();
             }
+            UpdateXMLNewResults();
         }
-
-        //var result = myDataTable.AsEnumerable().Where(myRow => myRow.Field<int>("RowNo") == 1);
+        
         private void UserView_AddButtonPushed(IViewGUI sender)
         {
             DataTable CompareTable = new DataTable();
@@ -139,7 +150,7 @@ namespace MMLibrary
             ModifiedGridSize = 0;
 
             TableFromModel = sender.TableContr; // receive data from Grid to the private double array (TableFromModel)
-
+            UpdateXMLPreviousResults();
             if (MyTable.Rows.Count == 0)
             {
                 for (int i = 0; i < TableFromModel.GetLength(0); i++) 
@@ -147,6 +158,7 @@ namespace MMLibrary
                     MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
                     ModifiedGridSize++;
                 }
+
                 if (GridWasChanged != null)
                 {
                     GridWasChanged(this);
@@ -159,13 +171,11 @@ namespace MMLibrary
                 {
                     CompareTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4],TableFromModel[i][5]);
                     var result = CompareTable.AsEnumerable().Intersect(MyTable.AsEnumerable(), DataRowComparer.Default);
-                    //var foundRows = MyTable.AsEnumerable().Where(r => r.Field<String>("Title").Equals(TableFromModel[i][0]) && r.Field<String>("Year").Equals(TableFromModel[i][1]) && r.Field<String>("Artist").Equals(TableFromModel[i][2]) && r.Field<String>("Album").Equals(TableFromModel[i][3]) && r.Field<String>("Genre").Equals(TableFromModel[i][4]));
+
                     if (result.Count<DataRow>() == 0)
                     {
                         ModifiedGridSize++;
                         MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
-                        //TempTableFromModel[k] =  new string[5];
-                        //TempTableFromModel[k] = TableFromModel[i];
                     }
                     CompareTable.Clear();
                 }
@@ -186,40 +196,91 @@ namespace MMLibrary
                     sender.TableContr = TableFromModel;
                 }
             }
-            //CompareTable.Clear();
-        }
-
-        public void CheckfoDuplicates()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PlayAudio()
-        {
-            throw new NotImplementedException();
+            UpdateXMLNewResults();// Save datatable to XML after adding a new batch of files
         }
 
         public void ReadFromXML()
         {
             throw new NotImplementedException();
         }
-
-        public void SendNewDataToController()
-        {}
-
-        public void UpdateXML()
+        private void UserView_SaveButtonPushed(IViewGUI sender)
         {
-            throw new NotImplementedException();
+            UpdateXMLNewResults();
         }
 
-        public bool AudioFileIsValid()
+        private void UserView_FormOpened(IViewGUI sender)
         {
-            return false;
+            ReadXMLNewResults();
+
+            TableFromModel = null;
+            TableFromModel = new string[MyTable.Rows.Count][];
+            for (int i = 0; i < MyTable.Rows.Count; i++)
+            {
+                TableFromModel[i] = new string[6];
+                for (int j = 0; j < TableFromModel[i].Length; j++)
+                {
+                    TableFromModel[i][j] = MyTable.Rows[i].Field<string>(j);
+                }
+            }
+            if (GridWasChanged != null)
+            {
+                GridWasChanged(this);
+                sender.TableContr = TableFromModel;
+            }
         }
 
-        public bool TagIsValid()
+        private void UpdateXMLPreviousResults()
         {
-            return false;
+            StringWriter writerOld = new StringWriter();
+            //MyTable.WriteXml(old_XmlFileName, XmlWriteMode.WriteSchema, true);
+            MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+        }
+        private void UpdateXMLNewResults()
+        {
+            StringWriter writerNew = new StringWriter();
+            //MyTable.WriteXml(new_XmlFileName, XmlWriteMode.WriteSchema, true);
+            MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+        }
+
+        private void ReadXMLPreviousResults()
+        {
+            MyTable.Clear();
+            //StringReader ReadOld = new StringReader();
+            MyTable.ReadXml(old_XmlFileName);
+        }
+        private void ReadXMLNewResults()
+        {
+            MyTable.Clear();
+
+            XElement x = XElement.Load(new_XmlFileName);
+
+            IEnumerable<XElement> de = from el in x.Descendants()
+                                       where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
+                                       select el;
+            int i = 0;
+            object[] rowArray = new object[6];
+            DataRow NodeToRow = null;
+
+            foreach (var d in de)
+            {
+                //    Console.WriteLine(d.Value);
+                if (i >= 6)
+                {
+                    NodeToRow = MyTable.NewRow();
+                    NodeToRow.ItemArray = rowArray;
+                    MyTable.Rows.Add(NodeToRow);
+                    ModifiedGridSize++;
+
+                    i = 0;
+                    rowArray = new object[6];
+                }
+                rowArray[i] = d.Value;
+                i++;
+            }
+            NodeToRow = MyTable.NewRow();
+            NodeToRow.ItemArray = rowArray;
+            MyTable.Rows.Add(NodeToRow);
+            ModifiedGridSize++;
         }
     }
 }

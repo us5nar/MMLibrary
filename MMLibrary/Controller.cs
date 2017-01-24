@@ -31,7 +31,7 @@ namespace MMLibrary
         private void UserView_AddButtonPushed(IViewGUI sender)  // sender is the object of Form1 class, through which we can access public properties
         {
             //AddIsPushed = true;
-            FilePathForController = sender.FilePath; // receive FilePaths from Form1 via public Property file path which is defined in View Interface. 
+            FilePathForController = sender.FilePaths; // receive FilePaths from Form1 via public Property file path which is defined in View Interface. 
                                                      //FileNameForController = sender.FileNames; // file name+
             FileNameForController = sender.FileNames;
             int k = 0;
@@ -41,7 +41,6 @@ namespace MMLibrary
                 try
                 {
                     myMp3.Read(FilePathForController[i]);
-                    //FullFileInfo InfoObj = new FullFileInfo();
                     
                     if (myMp3.Title == "")
                     {
@@ -59,7 +58,7 @@ namespace MMLibrary
                     sender.Genre = string.Format("{0}", myMp3.Genre);
                     // datastructure
                     
-                    sender.TableContr[i] = new string[] { sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre, sender.FilePath[i]};
+                    sender.TableContr[i] = new string[] { sender.Title, sender.Year, sender.Artist, sender.Album, sender.Genre, sender.FilePaths[i]};
                 }
                 catch (HundredMilesSoftware.UltraID3Lib.ID3FileException)
                 {

@@ -16,10 +16,9 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form , IViewGUI, IModel
     {
-        private const string m_XmlFileName = @"Library.xml";
+        //private const string m_XmlFileName = @"Library.xml";
         DataRow newMediaRow;
-        private string[][] TableForm;// = new string[openFileDialog1.FileNames.Length][6];
-        //private string[][] TableBackFromModelToFormPrivat;
+        private string[][] TableForm;
         private int UpdatedGridSize;
 
         private string[] FilePathsField;
@@ -42,6 +41,8 @@ namespace WindowsFormsApplication1
             Contr.AddButtonPrepare(this);
             ModelInst.AddButtonSignUp(this);
             ModelInst.SearchButtonSignUp(this);
+            ModelInst.SaveButtonSignUp(this);
+            ModelInst.OpenFormSignUp(this);
         }
 
         public string[][] TableContr
@@ -66,32 +67,6 @@ namespace WindowsFormsApplication1
             set
             {
                 SearchBoxField = value;
-            }
-        }
-
-        public string CellValue
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int FileSize
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -121,20 +96,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public int Duration
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string[] FilePath
+        public string[] FilePaths
         {
             get
             {
@@ -187,43 +149,53 @@ namespace WindowsFormsApplication1
                 GenreField = value;
             }
         }
-
-
-
+        
         public int NewGridSize
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return 0; }
+            set { }
         }
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
-
+            //MessageBox.Show("bindingSource1_CurrentChanged!!!");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
-            dataSet1.WriteXml(m_XmlFileName);
+            //dataSet1.WriteXml(m_XmlFileName);
+            OnSaveButtonPushed();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           // dataSet1.ReadXml(m_XmlFileName);
+            // dataSet1.ReadXml(m_XmlFileName);
+            OnFormOpened();
+            if (UpdatedGridSize > 0)
+            {
+                dataSet1.Clear();
+                for (int i = 0; i < TableForm.GetLength(0); i++)
+                {
+                    newMediaRow = dataSet1.Tables["MLlist"].NewRow();
+
+                    newMediaRow["Title"] = TableForm[i][0];
+                    newMediaRow["Year"] = TableForm[i][1];
+                    newMediaRow["Artist"] = TableForm[i][2];
+                    newMediaRow["Album"] = TableForm[i][3];
+                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["FilePath"] = TableForm[i][5];
+                    dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
+                }
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DataTable table = dataSet1.Tables["MLlist"].GetChanges();
-            if (table.Rows.Count > 0)
-            {
-                MessageBox.Show("Content was modified!!!");
-            }
+            //DataTable table = dataSet1.Tables["MLlist"].GetChanges();
+            //if (table.Rows.Count > 0)
+            //{
+            //    MessageBox.Show("Content was modified!!!");
+            //}
             Dispose(true);
         }
         public void GridWasChangedSignUp(IModel sender)
@@ -236,14 +208,11 @@ namespace WindowsFormsApplication1
             UpdatedGridSize = sender.NewGridSize;
             TableForm = new string[UpdatedGridSize][];
         }
-        /*
+        
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            string sent = "Title should be here";//chatBox.Text;
-            SearchBox.AppendText(sent);
-            //displayBox.AppendText(sent);
-            //displayBox.AppendText(Environment.NewLine);
-        }*/
+           // MessageBox.Show( "TextChanged modified!!!");
+        }
         public event AddButtonEventHandler AddButtonPushed;
 
         private void OnAddButtonPushed()
@@ -257,15 +226,6 @@ namespace WindowsFormsApplication1
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            //How to add a DataRow to the DataSet:
-            //==========================================================
-            //DataRow newMediaRow = dataSet1.Tables["MLlist"].NewRow();
-            //newMediaRow["fileName"] = "ALFKI";
-            //newMediaRow["Title"] = "Alfreds Futterkiste";
-            //dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
-            //==========================================================
-
-            //int size = -1;
             string[] filesName, paths;
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
@@ -293,7 +253,7 @@ namespace WindowsFormsApplication1
                         newMediaRow["Artist"] = TableForm[i][2];
                         newMediaRow["Album"] = TableForm[i][3];
                         newMediaRow["Genre"] = TableForm[i][4];
-                        newMediaRow["FilePath"] = TableForm[i][5];//FilePathsField[m]; m++;
+                        newMediaRow["FilePath"] = TableForm[i][5];
                         dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                     }
                 }
@@ -302,6 +262,8 @@ namespace WindowsFormsApplication1
 
         public event SearchButtonEventHandler SearchButtonPushed;
         public event ChangedGridSizeHandler GridWasChanged;
+        public event SaveButtonHandler SaveButtonPushed;
+        public event OpenFormHandler FormOpened;
 
         private void OnSearchButtonPushed()
         {
@@ -312,15 +274,6 @@ namespace WindowsFormsApplication1
         }
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            //The example how to search
-            //for (int i = 0; i < dataGridView1.RowCount; i++)
-            //    if (dataGridView1[1, i].FormattedValue.ToString().
-            //        Contains(SeachBox.Text.Trim()))
-            //    {
-            //        dataGridView1.CurrentCell = dataGridView1[0, i];
-            //        return;
-            //    }
-            //int k = 0;
             SearchBoxField = SearchBox.Text;
             OnSearchButtonPushed();
             if (UpdatedGridSize > 0)
@@ -335,7 +288,7 @@ namespace WindowsFormsApplication1
                     newMediaRow["Artist"] = TableForm[i][2];
                     newMediaRow["Album"] = TableForm[i][3];
                     newMediaRow["Genre"] = TableForm[i][4];
-                    newMediaRow["FilePath"] = TableForm[i][5];//FilePathsField[k]; k++;
+                    newMediaRow["FilePath"] = TableForm[i][5];
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }
             }
@@ -344,11 +297,25 @@ namespace WindowsFormsApplication1
                 dataSet1.Clear();
             }
         }
-
+        private void OnSaveButtonPushed()
+        {
+            if (SaveButtonPushed != null)
+            {
+                SaveButtonPushed(this);
+            }
+        }
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string lastCellValue = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
             axWindowsMediaPlayer1.URL = lastCellValue;
+        }
+
+        private void OnFormOpened()
+        {
+            if (FormOpened != null)
+            {
+                FormOpened(this);
+            }
         }
 
         public void DataGriIsEmpty()
@@ -401,6 +368,16 @@ namespace WindowsFormsApplication1
         {
             string lastCellValue = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString(); //column 5
             axWindowsMediaPlayer1.URL = lastCellValue;
+        }
+
+        public void UpdateXML()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ReadFromXML()
+        {
+            throw new NotImplementedException();
         }
     }
 }
