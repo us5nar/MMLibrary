@@ -121,14 +121,18 @@ namespace MMLibrary
         private void UserView_SearchButtonPushed(IViewGUI sender)
         {
             searchBox = sender.SeachBoxText;
-            //SearchBoxAfter = searchBox;
-           // UpdateXMLPreviousResults();
+
             if (TableFromModel != null)
             {
                 foreach (DataRow resultedRow in MyTable.Rows)  // Creat new table from old table based on search filter
                 {
                     // copy from initial DataTable to the Updated one
-                    if (resultedRow["Title"].ToString().ToLower().Contains(searchBox.ToLower()))
+                    if (resultedRow["Title"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["Year"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["Artist"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["Album"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["Genre"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["FilePath"].ToString().ToLower().Contains(searchBox.ToLower()))
                     {
                         DataRow newRow = UpdatedTable.NewRow();
                         newRow.ItemArray = resultedRow.ItemArray.Clone() as object[];
@@ -283,10 +287,13 @@ namespace MMLibrary
             TableFromModel = sender.TableContr; // receive data from Grid to the private double array (TableFromModel)
             MyTable.Clear();
             //UpdateXMLPreviousResults();
-            for (int i = 0; i < TableFromModel.GetLength(0); i++)
+            if (TableFromModel != null)
             {
-                MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
-                //ModifiedGridSize++;
+                for (int i = 0; i < TableFromModel.GetLength(0); i++)
+                {
+                    MyTable.Rows.Add(TableFromModel[i][0], TableFromModel[i][1], TableFromModel[i][2], TableFromModel[i][3], TableFromModel[i][4], TableFromModel[i][5]);
+                    //ModifiedGridSize++;
+                }
             }
             UpdateXMLPreviousResults();
           }
@@ -295,116 +302,128 @@ namespace MMLibrary
         {
             //ReadXMLNewResults();
             ReadXMLPreviousResults();
-            TableFromModel = null;
-            TableFromModel = new string[MyTable.Rows.Count][];
+            TableFromModel = null; // prepare 2D array for sending results from  inner DataTable(with data from XML) to Form's Data Grid
+            TableFromModel = new string[MyTable.Rows.Count][]; // initialize the new size of 2D array with the size of updated DataTable
             for (int i = 0; i < MyTable.Rows.Count; i++)
             {
                 TableFromModel[i] = new string[6];
                 for (int j = 0; j < TableFromModel[i].Length; j++)
                 {
-                    TableFromModel[i][j] = MyTable.Rows[i].Field<string>(j);
+                    TableFromModel[i][j] = MyTable.Rows[i].Field<string>(j); // populate 2D array from inner Data Table (Model Class)
                 }
             }
-            if (GridWasChanged != null)
+            if (GridWasChanged != null) 
             {
-                GridWasChanged(this);
-                sender.TableContr = TableFromModel;
-                if (TableFromModel == null)
+                GridWasChanged(this); // event triggered if the new Data Table size (and 2D array size too) are different from the previous size
+                sender.TableContr = TableFromModel; // send new data via 2D array to the Form's Data Grid
+                if (TableFromModel == null) // if nothing to send
                 {
-                    sender.NewGridSize = 0;
+                    sender.NewGridSize = 0; // send the new size as 0 if there are no results in Data Table
                 }
                 else
                 {
-                    sender.NewGridSize = TableFromModel.Length;
+                    sender.NewGridSize = TableFromModel.Length;// send the new size as well
                 }
             }
         }
 
         private void UpdateXMLPreviousResults()
         {
-            StringWriter writerOld = new StringWriter();
-            //MyTable.WriteXml(old_XmlFileName, XmlWriteMode.WriteSchema, true);
-            MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            if (File.Exists(old_XmlFileName))
+            {
+                StringWriter writerOld = new StringWriter();
+                MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            }
         }
         private void UpdateXMLNewResults()
         {
-            StringWriter writerNew = new StringWriter();
-            //MyTable.WriteXml(new_XmlFileName, XmlWriteMode.WriteSchema, true);
-            MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            if (File.Exists(new_XmlFileName))
+            {
+                StringWriter writerNew = new StringWriter();
+                MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            }
         }
 
         private void ReadXMLPreviousResults()
         {
-            //MyTable.Clear();
-            //StringReader ReadOld = new StringReader();
-            //MyTable.ReadXml(old_XmlFileName);
-            MyTable.Clear();
-
-            XElement x = XElement.Load(old_XmlFileName);
-            //[anton]If file does not exist - we have exception here
-
-            IEnumerable<XElement> de = from el in x.Descendants()
-                                       where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
-                                       select el;
-            int i = 0;
-            object[] rowArray = new object[6];
-            DataRow NodeToRow = null;
-
-            foreach (var d in de)
+            if (File.Exists(old_XmlFileName))
             {
-                //    Console.WriteLine(d.Value);
-                if (i >= 6)
+                XElement x = XElement.Load(old_XmlFileName);
+                //[anton]If file does not exist - we have exception here
+
+                IEnumerable<XElement> de = from el in x.Descendants()
+                                           where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
+                                           select el;
+                int i = 0;
+                bool visited = false;
+                object[] rowArray = new object[6];
+                DataRow NodeToRow = null;
+                MyTable.Clear();
+                foreach (var d in de)
+                {
+                    //    Console.WriteLine(d.Value);
+                    visited = true;
+                    if (i >= 6)
+                    {
+                        NodeToRow = MyTable.NewRow();
+                        NodeToRow.ItemArray = rowArray;
+                        MyTable.Rows.Add(NodeToRow);
+                        ModifiedGridSize++;
+
+                        i = 0;
+                        rowArray = new object[6];
+                    }
+                    rowArray[i] = d.Value;
+                    i++;
+                }
+                if (visited)
                 {
                     NodeToRow = MyTable.NewRow();
                     NodeToRow.ItemArray = rowArray;
                     MyTable.Rows.Add(NodeToRow);
                     ModifiedGridSize++;
-
-                    i = 0;
-                    rowArray = new object[6];
                 }
-                rowArray[i] = d.Value;
-                i++;
             }
-            NodeToRow = MyTable.NewRow();
-            NodeToRow.ItemArray = rowArray;
-            MyTable.Rows.Add(NodeToRow);
-            ModifiedGridSize++;
         }
-    
         private void ReadXMLNewResults()
         {
-            MyTable.Clear();
-
-            XElement x = XElement.Load(new_XmlFileName);
-
-            IEnumerable<XElement> de = from el in x.Descendants()
-                                       where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
-                                       select el;
-            int i = 0;
-            object[] rowArray = new object[6];
-            DataRow NodeToRow = null;
-
-            foreach (var d in de)
+            if (File.Exists(new_XmlFileName))
             {
-                //    Console.WriteLine(d.Value);
-                if (i >= 6)
+                XElement x = XElement.Load(new_XmlFileName);
+                //[anton]If file does not exist - we have exception here
+
+                IEnumerable<XElement> de = from el in x.Descendants()
+                                           where !(el.Name == "TableAsInGrid" || el.Name == "TemporaryTableAfterSearch")
+                                           select el;
+                int i = 0;
+                bool visited = false;
+                object[] rowArray = new object[6];
+                DataRow NodeToRow = null;
+                MyTable.Clear();
+                foreach (var d in de)
+                {
+                    //    Console.WriteLine(d.Value);
+                    if (i >= 6)
+                    {
+                        NodeToRow = MyTable.NewRow();
+                        NodeToRow.ItemArray = rowArray;
+                        MyTable.Rows.Add(NodeToRow);
+                        ModifiedGridSize++;
+
+                        i = 0;
+                        rowArray = new object[6];
+                    }
+                    rowArray[i] = d.Value;
+                    i++;
+                }
+                if (visited)
                 {
                     NodeToRow = MyTable.NewRow();
                     NodeToRow.ItemArray = rowArray;
                     MyTable.Rows.Add(NodeToRow);
                     ModifiedGridSize++;
-
-                    i = 0;
-                    rowArray = new object[6];
                 }
-                rowArray[i] = d.Value;
-                i++;
             }
-            NodeToRow = MyTable.NewRow();
-            NodeToRow.ItemArray = rowArray;
-            MyTable.Rows.Add(NodeToRow);
-            ModifiedGridSize++;
         }
     }
 }
