@@ -55,6 +55,7 @@ namespace WindowsFormsApplication1
             this.playButton = new System.Windows.Forms.Button();
             this.SearchBox = new System.Windows.Forms.TextBox();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
@@ -248,11 +249,24 @@ namespace WindowsFormsApplication1
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(620, 130);
             this.axWindowsMediaPlayer1.TabIndex = 5;
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(286, 217);
+            this.button1.Margin = new System.Windows.Forms.Padding(13, 3, 3, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Clean";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 401);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.SearchBox);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.axWindowsMediaPlayer1);
@@ -303,6 +317,7 @@ namespace WindowsFormsApplication1
         private System.Windows.Forms.TextBox SearchBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn FilePath;
         private bool FirstRun;
+        private System.Windows.Forms.Button button1;
     }
 }
 

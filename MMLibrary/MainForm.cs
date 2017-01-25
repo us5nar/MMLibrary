@@ -413,8 +413,6 @@ namespace WindowsFormsApplication1
         }
         private void SearchBox_TextChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show("Text was modified!!!");
-
             SearchBoxField = SearchBox.Text;
             OnSearchBoxTextChanged();
 
@@ -457,5 +455,11 @@ namespace WindowsFormsApplication1
             SearchBoxFieldBefore = SearchBoxField;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataSet1.Clear();
+            TableForm = null;
+            OnSaveButtonPushed();
+        }
     }
 }
