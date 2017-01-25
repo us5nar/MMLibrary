@@ -329,13 +329,13 @@ namespace MMLibrary
 
         private void UpdateXMLPreviousResults()
         {
-            StringWriter writerOld = new StringWriter();
-            MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            File.WriteAllText(old_XmlFileName, string.Empty);
+            MyTable.WriteXml(old_XmlFileName);
         }
         private void UpdateXMLNewResults()
         {
-            StringWriter writerNew = new StringWriter();
-            MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
+            File.WriteAllText(old_XmlFileName, string.Empty);
+            MyTable.WriteXml(new_XmlFileName);
         }
 
         private void ReadXMLPreviousResults()
