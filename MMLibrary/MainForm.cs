@@ -175,10 +175,10 @@ namespace WindowsFormsApplication1
                     newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
                     newMediaRow["Title"] = TableForm[i][0];
-                    newMediaRow["Year"] = TableForm[i][1];
-                    newMediaRow["Artist"] = TableForm[i][2];
-                    newMediaRow["Album"] = TableForm[i][3];
-                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["Artist"] = TableForm[i][1];
+                    newMediaRow["Album"] = TableForm[i][2];
+                    newMediaRow["Genre"] = TableForm[i][3];
+                    newMediaRow["Year"] = TableForm[i][4];
                     newMediaRow["FilePath"] = TableForm[i][5];
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }
@@ -241,10 +241,10 @@ namespace WindowsFormsApplication1
                         newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
                         newMediaRow["Title"] = TableForm[i][0];
-                        newMediaRow["Year"] = TableForm[i][1];
-                        newMediaRow["Artist"] = TableForm[i][2];
-                        newMediaRow["Album"] = TableForm[i][3];
-                        newMediaRow["Genre"] = TableForm[i][4];
+                        newMediaRow["Artist"] = TableForm[i][1];
+                        newMediaRow["Album"] = TableForm[i][2];
+                        newMediaRow["Genre"] = TableForm[i][3];
+                        newMediaRow["Year"] = TableForm[i][4];
                         newMediaRow["FilePath"] = TableForm[i][5];
                         dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                     }
@@ -277,10 +277,10 @@ namespace WindowsFormsApplication1
                     newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
                     newMediaRow["Title"] = TableForm[i][0];
-                    newMediaRow["Year"] = TableForm[i][1];
-                    newMediaRow["Artist"] = TableForm[i][2];
-                    newMediaRow["Album"] = TableForm[i][3];
-                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["Artist"] = TableForm[i][1];
+                    newMediaRow["Album"] = TableForm[i][2];
+                    newMediaRow["Genre"] = TableForm[i][3];
+                    newMediaRow["Year"] = TableForm[i][4];
                     newMediaRow["FilePath"] = TableForm[i][5];
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }
@@ -426,10 +426,10 @@ namespace WindowsFormsApplication1
                     newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
                     newMediaRow["Title"] = TableForm[i][0];
-                    newMediaRow["Year"] = TableForm[i][1];
-                    newMediaRow["Artist"] = TableForm[i][2];
-                    newMediaRow["Album"] = TableForm[i][3];
-                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["Artist"] = TableForm[i][1];
+                    newMediaRow["Album"] = TableForm[i][2];
+                    newMediaRow["Genre"] = TableForm[i][3];
+                    newMediaRow["Year"] = TableForm[i][4];
                     newMediaRow["FilePath"] = TableForm[i][5];
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }
@@ -446,10 +446,10 @@ namespace WindowsFormsApplication1
                     newMediaRow = dataSet1.Tables["MLlist"].NewRow();
 
                     newMediaRow["Title"] = TableForm[i][0];
-                    newMediaRow["Year"] = TableForm[i][1];
-                    newMediaRow["Artist"] = TableForm[i][2];
-                    newMediaRow["Album"] = TableForm[i][3];
-                    newMediaRow["Genre"] = TableForm[i][4];
+                    newMediaRow["Artist"] = TableForm[i][1];
+                    newMediaRow["Album"] = TableForm[i][2];
+                    newMediaRow["Genre"] = TableForm[i][3];
+                    newMediaRow["Year"] = TableForm[i][4];
                     newMediaRow["FilePath"] = TableForm[i][5];
                     dataSet1.Tables["MLlist"].Rows.Add(newMediaRow);
                 }

@@ -45,17 +45,17 @@ namespace MMLibrary
             UpdatedTable = new DataTable() { TableName = "TemporaryTableAfterSearch" }; 
             ModifiedGridSize = 0;
             MyTable.Columns.Add("Title", typeof(string));
-            MyTable.Columns.Add("Year", typeof(string));
             MyTable.Columns.Add("Artist", typeof(string));
             MyTable.Columns.Add("Album", typeof(string));
             MyTable.Columns.Add("Genre", typeof(string));
+            MyTable.Columns.Add("Year", typeof(string));
             MyTable.Columns.Add("FilePath", typeof(string));
 
             UpdatedTable.Columns.Add("Title", typeof(string));
-            UpdatedTable.Columns.Add("Year", typeof(string));
             UpdatedTable.Columns.Add("Artist", typeof(string));
             UpdatedTable.Columns.Add("Album", typeof(string));
             UpdatedTable.Columns.Add("Genre", typeof(string));
+            UpdatedTable.Columns.Add("Year", typeof(string));
             UpdatedTable.Columns.Add("FilePath", typeof(string));
 
             FormToModel.GridWasChangedSignUp(this);
@@ -128,10 +128,10 @@ namespace MMLibrary
                 {
                     // copy from initial DataTable to the Updated one
                     if (resultedRow["Title"].ToString().ToLower().Contains(searchBox.ToLower()) ||
-                        resultedRow["Year"].ToString().ToLower().Contains(searchBox.ToLower()) ||
                         resultedRow["Artist"].ToString().ToLower().Contains(searchBox.ToLower()) ||
                         resultedRow["Album"].ToString().ToLower().Contains(searchBox.ToLower()) ||
                         resultedRow["Genre"].ToString().ToLower().Contains(searchBox.ToLower()) ||
+                        resultedRow["Year"].ToString().ToLower().Contains(searchBox.ToLower()) ||
                         resultedRow["FilePath"].ToString().ToLower().Contains(searchBox.ToLower()))
                     {
                         DataRow newRow = UpdatedTable.NewRow();
@@ -203,10 +203,10 @@ namespace MMLibrary
         {
             DataTable CompareTable = new DataTable();
             CompareTable.Columns.Add("Title", typeof(string));
-            CompareTable.Columns.Add("Year", typeof(string));
             CompareTable.Columns.Add("Artist", typeof(string));
             CompareTable.Columns.Add("Album", typeof(string));
             CompareTable.Columns.Add("Genre", typeof(string));
+            CompareTable.Columns.Add("Year", typeof(string));
             CompareTable.Columns.Add("FilePath", typeof(string));
             DataRow CurrentRow = CompareTable.NewRow();
             ModifiedGridSize = 0;
@@ -329,12 +329,12 @@ namespace MMLibrary
 
         private void UpdateXMLPreviousResults()
         {
-            File.WriteAllText(old_XmlFileName, string.Empty);
+            //File.WriteAllText(old_XmlFileName, string.Empty);
             MyTable.WriteXml(old_XmlFileName);
         }
         private void UpdateXMLNewResults()
         {
-            File.WriteAllText(new_XmlFileName, string.Empty);
+            //File.WriteAllText(new_XmlFileName, string.Empty);
             MyTable.WriteXml(new_XmlFileName);
         }
 
