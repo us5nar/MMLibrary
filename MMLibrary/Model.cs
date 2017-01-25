@@ -334,7 +334,7 @@ namespace MMLibrary
         }
         private void UpdateXMLNewResults()
         {
-            File.WriteAllText(old_XmlFileName, string.Empty);
+            File.WriteAllText(new_XmlFileName, string.Empty);
             MyTable.WriteXml(new_XmlFileName);
         }
 
