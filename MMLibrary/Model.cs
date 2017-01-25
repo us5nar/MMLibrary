@@ -329,19 +329,13 @@ namespace MMLibrary
 
         private void UpdateXMLPreviousResults()
         {
-            if (File.Exists(old_XmlFileName))
-            {
-                StringWriter writerOld = new StringWriter();
-                MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
-            }
+            StringWriter writerOld = new StringWriter();
+            MyTable.WriteXml(old_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
         }
         private void UpdateXMLNewResults()
         {
-            if (File.Exists(new_XmlFileName))
-            {
-                StringWriter writerNew = new StringWriter();
-                MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
-            }
+            StringWriter writerNew = new StringWriter();
+            MyTable.WriteXml(new_XmlFileName/*, XmlWriteMode.IgnoreSchema, true*/);
         }
 
         private void ReadXMLPreviousResults()
