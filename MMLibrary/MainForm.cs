@@ -376,7 +376,7 @@ namespace WindowsFormsApplication1
             //dataSet1.Tables.Add(TempTable.Copy());
             if (FirstRun)
             {  }
-            else
+            else if(dataSet1.Tables.Count > 0)
             {
                 DataRow newMediaRow;
                 for (int i = 0; i < dataSet1.Tables[0].Rows.Count; i++)
