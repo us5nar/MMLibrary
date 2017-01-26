@@ -160,7 +160,6 @@ namespace WindowsFormsApplication1
 
         private void bindingSource1_CurrentChanged(object sender, EventArgs e)
         {
-           //MessageBox.Show("bindingSource1_CurrentChanged!!!");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -187,11 +186,6 @@ namespace WindowsFormsApplication1
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //DataTable table = dataSet1.Tables["MLlist"].GetChanges();
-            //if (table.Rows.Count > 0)
-            //{
-            //    MessageBox.Show("Content was modified!!!");
-            //}
             Dispose(true);
         }
         public void GridWasChangedSignUp(IModel sender)

@@ -200,7 +200,8 @@ namespace WindowsFormsApplication1
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.Filter = "MP3 files|*.mp3";
+            this.openFileDialog1.Filter = "All Supported Audio | *.mp3; *.wma; *.m3u; *.asf; *.wma; *.wmv; *.wm; *.asx; *.wax; *.wvx; *.wmx; *.wpl; *.mid;*.midi; *.avi; *.wav; *.mpg; *.mpeg";
+            //"MP3 Files (*.mp3)|*.mp3 | WMA Files (*.wma)|*.wma";
             this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.Title = "Open media files";
             // 
@@ -274,9 +275,9 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.dataGridView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(380, 340);
             this.Name = "Form1";
-            this.ShowIcon = false;
             this.Text = "MP3 Media Library";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
