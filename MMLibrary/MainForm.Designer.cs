@@ -274,7 +274,7 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.dataGridView1);
-            this.MinimumSize = new System.Drawing.Size(300, 340);
+            this.MinimumSize = new System.Drawing.Size(380, 340);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "MP3 Media Library";
