@@ -11,6 +11,7 @@ using System.Collections.Generic;
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
+using DataGridWithFilter;
 
 namespace WindowsFormsApplication1
 {
@@ -33,9 +34,11 @@ namespace WindowsFormsApplication1
 
         private string SearchBoxField;
         private string SearchBoxFieldBefore;
+
         public Form1()
         {
             InitializeComponent();
+
             Controller Contr = new Controller();
             Model ModelInst = new Model(this);
             Contr.AddButtonPrepare(this);
