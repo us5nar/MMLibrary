@@ -1,4 +1,5 @@
-﻿using MMLibrary;
+﻿using System;
+using MMLibrary;
 
 namespace WindowsFormsApplication1
 {
@@ -289,6 +290,11 @@ namespace WindowsFormsApplication1
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 

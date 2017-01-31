@@ -6,32 +6,29 @@ using System.Threading.Tasks;
 
 namespace MMLibrary
 {
-   public delegate void AddButtonEventHandler(IViewGUI sender);
-   public delegate void SearchButtonEventHandler(IViewGUI sender);
-   public delegate void SaveButtonHandler(IViewGUI sender);
+    public delegate void AddButtonEventHandler(IViewGUI sender);
+    public delegate void SearchButtonEventHandler(IViewGUI sender);
+    public delegate void SaveButtonHandler(IViewGUI sender);
     public delegate void OpenFormHandler(IViewGUI sender);
     public delegate void SearchBoxTextChangedHandler(IViewGUI sender);
 
     public interface IViewGUI
     {
-         //string FileName { set; get; }
-        // int FileSize { set; get; }
-         //int Duration { set; get; }
-         string Title { set; get; }
-         string Year { set; get; }
-         string Artist { set; get; }
-         string Album { set; get; }
-        string Genre { set; get; }
-        string[] FilePaths { set; get; }
-        string[] FileNames { set; get; }
-        int NewGridSize{ set; get; }
-        string[][] TableContr { set; get; }
-        //string[][] TableBackFromModelToForm1 { set; get; }
-        string SeachBoxText { set; get; }
+        string Title { set; get; } // public property for transfering Title tag between classes
+        string Year { set; get; } // public property for transfering Year tag between classes
+        string Artist { set; get; } // public property for transfering Artist tag between classes
+        string Album { set; get; } // public property for transfering Album tag between classes
+        string Genre { set; get; } // public property for transfering Genre tag between classes
+        string[] FilePaths { set; get; } // public property for transfering File Paths between classes
+        string[] FileNames { set; get; } // public property for transfering File Names between classes
+        int NewGridSize { set; get; }
 
-        void DataGriIsEmpty();
+        string[][] TableContr { set; get; } // public 2D array for transfering data rows between classes
+
+        string SeachBoxText { set; get; } // public property for text to search for transfering between classes
+        
         void GridWasChangedSignUp(IModel sender);
-        //LinkedList<string> CurrentRow;
+        
         event AddButtonEventHandler AddButtonPushed;
         event SearchButtonEventHandler SearchButtonPushed;
         event SaveButtonHandler SaveButtonPushed;
